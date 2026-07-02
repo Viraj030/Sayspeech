@@ -42,30 +42,30 @@ export default function GameLayout({
       <div className={`w-full ${isWide ? 'max-w-3xl' : 'max-w-3xl'} h-full bg-[#58b368] rounded-[24px] sm:rounded-[32px] p-2.5 flex flex-col shadow-2xl border-4 border-slate-700/20 relative overflow-hidden transition-all duration-300`}>
 
         {/* Compact Header (fixed height, zero padding waste) */}
-        <header className="flex items-center justify-between px-2 py-1.5 shrink-0 select-none">
+        <header className="relative flex items-center px-2 py-1.5 shrink-0 select-none">
           {/* HOME Button */}
           <button
             onClick={onHome}
-            className="flex items-center gap-1 bg-[#ff5b5b] hover:bg-[#e04a4a] text-white font-black text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-white/20 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer uppercase shrink-0"
+            className="flex items-center gap-1 bg-[#ff5b5b] hover:bg-[#e04a4a] text-white font-black text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-white/20 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer uppercase shrink-0 z-10"
           >
             <Home className="w-3.5 h-3.5" />
             <span className="hidden xs:inline">Home</span>
           </button>
 
           {/* Activity Title (uppercase bold white) */}
-          <h1 className="text-sm sm:text-xl font-black text-white tracking-wider font-display drop-shadow-sm uppercase text-center truncate px-2">
+          <h1 className="absolute left-1/2 -translate-x-1/2 text-sm sm:text-xl font-black text-white tracking-wider font-display drop-shadow-sm uppercase text-center truncate px-2 z-0">
             {activityName}
           </h1>
 
           {/* AUDIO Button */}
-          <button
+          {/* <button
             onClick={handleAudioToggle}
             className={`flex items-center gap-1 ${audioMuted ? 'bg-slate-500' : 'bg-[#9b59b6] hover:bg-[#8e44ad]'
               } text-white font-black text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-white/20 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer uppercase shrink-0`}
           >
             <Volume2 className="w-3.5 h-3.5" />
             <span className="hidden xs:inline">Audio</span>
-          </button>
+          </button> */}
         </header>
 
         {/* Main Content Area (stretches dynamically, min-h-0 prevents overflow scrolling) */}

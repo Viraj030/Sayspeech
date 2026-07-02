@@ -39,7 +39,7 @@ const IMG = (n: string) => `/make_a_dosa_images/${n}`;
 export const makeDosaData: GameScreen[] = [
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 1 — Welcome
+  // SLIDE 1 : Welcome
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-1',
@@ -50,7 +50,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 3 — Story: Intro (Mom + Kid, empty tawa, two dialogues)
+  // SLIDE 3 : Story: Intro (Mom + Kid, empty tawa, two dialogues)
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-3',
@@ -76,7 +76,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 4 — Story-Items: Mom points to ingredients (STATIC display, no drag)
+  // SLIDE 4 : Story-Items: Mom points to ingredients (STATIC display, no drag)
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-4',
@@ -102,7 +102,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 5 — DRAG #1: Pour batter on tawa
+  // SLIDE 5 : DRAG #1: Pour batter on tawa
   // Start: Empty tawa (image_009.png)
   // Drag item: Dosa Batter
   // Success overlay: image_022.png (full-screen background state showing batter poured)
@@ -135,7 +135,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 6 — Story: Spreading the batter
+  // SLIDE 6 : Story: Spreading the batter
   // Start: Dosa batter spread (image_023.png showing batter spread)
   // ══════════════════════════════════════════════════════════════════════════
   {
@@ -156,7 +156,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 7 — Story: Nicely spread
+  // SLIDE 7 : Story: Nicely spread
   // Start: Nicely spread batter (image_024.png showing nicely spread state)
   // ══════════════════════════════════════════════════════════════════════════
   {
@@ -178,7 +178,7 @@ export const makeDosaData: GameScreen[] = [
 
   // ══════════════════════════════════════════════════════════════════════════
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 8 — DRAG #2: Add potato masala
+  // SLIDE 8 : DRAG #2: Add potato masala
   // Start: Nicely spread batter (image_024.png)
   // Drag item: Potato filling
   // Success overlay: image_026.png (potato masala put on dosa)
@@ -212,7 +212,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 9 — Story: Spreading the masala
+  // SLIDE 9 : Story: Spreading the masala
   // Start: potato masala spread evenly (image_027.png)
   // ══════════════════════════════════════════════════════════════════════════
   {
@@ -233,7 +233,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 10 — DRAG #3: Add drops of oil
+  // SLIDE 10 : DRAG #3: Add drops of oil
   // Start: Masala spread evenly (image_027.png)
   // Drag item: Oil
   // Success overlay: image_028.png (oil drops added on edges)
@@ -267,7 +267,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 11 — DRAG #4: Flip the dosa
+  // SLIDE 11 : DRAG #4: Flip the dosa
   // Start: Oil added (image_028.png)
   // Drag item: Spatula (Ladle)
   // Success overlay: image_030.png (folded dosa flipped/ready)
@@ -301,7 +301,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 12 — DRAG #5: Serve on plate
+  // SLIDE 12 : DRAG #5: Serve on plate
   // Start: Folded dosa ready (image_030.png)
   // Drag item: Plate
   // Success overlay: image_018.png (eating scene - full cover)
@@ -335,7 +335,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 13 — Story: Eating the dosa
+  // SLIDE 13 : Story: Eating the dosa
   // Start: Mom + Kid eating (image_018.png)
   // ══════════════════════════════════════════════════════════════════════════
   {
@@ -355,7 +355,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 14 — Section: Practice intro
+  // SLIDE 14 : Section: Practice intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-14',
@@ -374,7 +374,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 15 — Section Intro
+  // SLIDE 15 : Section Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-15',
@@ -385,7 +385,7 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd15',
         speaker: 'instruction',
-        text: "RECEPTIVE & EXPRESSIVE LANGUAGE — Point to the correct object!",
+        text: "RECEPTIVE & EXPRESSIVE LANGUAGE : Point to the correct object!",
         position: { top: 28, left: 10 },
         tailDirection: 'down'
       }
@@ -393,7 +393,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDES 16–20 — Vocabulary Practice
+  // SLIDES 16–20 : Vocabulary Practice
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-16',
@@ -472,7 +472,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 21 — Object Function Intro
+  // SLIDE 21 : Object Function Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-21',
@@ -483,7 +483,7 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd21',
         speaker: 'instruction',
-        text: "OBJECT FUNCTION — What is it? How do we use it?",
+        text: "OBJECT FUNCTION : What is it? How do we use it?",
         position: { top: 28, left: 10 },
         tailDirection: 'down'
       }
@@ -491,7 +491,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDES 22–26 — Object Function Practice
+  // SLIDES 22–26 : Object Function Practice
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-22',
@@ -620,7 +620,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 27 — Sentence Building Intro
+  // SLIDE 27 : Sentence Building Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-27',
@@ -631,7 +631,7 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd27',
         speaker: 'instruction',
-        text: "SENTENCE BUILDING — Drag the words in the correct order!",
+        text: "SENTENCE BUILDING : Drag the words in the correct order!",
         position: { top: 28, left: 10 },
         tailDirection: 'down'
       }
@@ -639,7 +639,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDES 28–32 — Sentence Building Practice
+  // SLIDES 28–32 : Sentence Building Practice
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-28',
@@ -683,7 +683,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 33 — WH Questions Intro
+  // SLIDE 33 : WH Questions Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-33',
@@ -694,7 +694,7 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd33',
         speaker: 'instruction',
-        text: "WH QUESTIONS — Select the correct answer!",
+        text: "WH QUESTIONS : Select the correct answer!",
         position: { top: 28, left: 10 },
         tailDirection: 'down'
       }
@@ -702,7 +702,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDES 34–43 — WH Questions Practice
+  // SLIDES 34–43 : WH Questions Practice
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-34',
@@ -816,7 +816,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 44 — Sequencing Intro
+  // SLIDE 44 : Sequencing Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-44',
@@ -827,7 +827,7 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd44',
         speaker: 'instruction',
-        text: "SEQUENCING — Drag the images in the correct order!",
+        text: "SEQUENCING : Drag the images in the correct order!",
         position: { top: 28, left: 10 },
         tailDirection: 'down'
       }
@@ -835,7 +835,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 45 — Sequencing Practice
+  // SLIDE 45 : Sequencing Practice
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-45',
@@ -851,7 +851,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDES 46–49 — Celebration images
+  // SLIDES 46–49 : Celebration images
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-46',
@@ -883,7 +883,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 50 — Completion
+  // SLIDE 50 : Completion
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-50',

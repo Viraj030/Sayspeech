@@ -159,19 +159,21 @@ export default function ObjectFunctionScreen({
         </div>
       </div>
 
-      {/* Success checklist overlay */}
-      <AnimatePresence>
-        {isSolved && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-1.5 text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-250 text-[10px] sm:text-xs font-black shadow-sm shrink-0"
-          >
-            <Check className="w-4 h-4" />
-            <span>Solved! You identified the item and function!</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Success checklist overlay placeholder */}
+      <div className="h-8 sm:h-10 flex items-center justify-center shrink-0">
+        <AnimatePresence>
+          {isSolved && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex items-center gap-1.5 text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-250 text-[10px] sm:text-xs font-black shadow-sm"
+            >
+              <Check className="w-4 h-4" />
+              <span>Solved! You identified the item and function!</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

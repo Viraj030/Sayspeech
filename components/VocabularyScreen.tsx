@@ -85,7 +85,7 @@ export default function VocabularyScreen({
           const isCorrect = option.id === correctOptionId && isSolved;
           const isShaking = shakeId === option.id;
 
-          let borderClass = 'border-slate-200 hover:border-indigo-300';
+          let borderClass = 'border-slate-200';
           if (isCorrect) {
             borderClass = 'border-emerald-500 ring-2 ring-emerald-300 shadow-emerald-50';
           }
@@ -99,7 +99,6 @@ export default function VocabularyScreen({
                 }`}
               animate={isShaking ? { x: [-8, 8, -8, 8, -4, 4, 0] } : {}}
               transition={{ duration: 0.5 }}
-              whileHover={isSolved ? {} : { scale: 1.05 }}
             >
               <div className="flex items-center justify-center w-full h-full p-2.5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
