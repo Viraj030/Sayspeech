@@ -44,6 +44,7 @@ function Bubble({
   const isInstruction = dialogue.speaker === 'instruction';
   const bg = isKid ? '#eff6ff' : isInstruction ? '#eef2ff' : '#ffffff';
   const border = isKid ? '#3b82f6' : isInstruction ? '#6366f1' : '#1e293b';
+  const txtColor = isKid ? '#0c4a6e' : isInstruction ? '#1e1b4b' : '#1e293b';
 
   return (
     <motion.div
@@ -69,19 +70,19 @@ function Bubble({
           boxShadow: '0 6px 20px rgba(0,0,0,0.16)',
           fontSize: 'clamp(10px, 1.7cqw, 15px)',
           fontWeight: 500,
-          color: '#1e293b',
+          color: txtColor,
           lineHeight: 1.4,
           position: 'relative',
         }}
       >
         {/* Ghost text pre-sizes the bubble */}
-        <p style={{ visibility: 'hidden', margin: 0, whiteSpace: 'pre-wrap' }} aria-hidden>
+        <p style={{ visibility: 'hidden', margin: 0, whiteSpace: 'pre-wrap', color: txtColor }} aria-hidden>
           {dialogue.text}
         </p>
         {/* Visible typed overlay */}
         <p style={{
           position: 'absolute', top: 8, left: 14, right: 14,
-          margin: 0, whiteSpace: 'pre-wrap',
+          margin: 0, whiteSpace: 'pre-wrap', color: txtColor,
         }}>
           {done ? dialogue.text : text}
         </p>
@@ -152,20 +153,15 @@ export default function StoryScreen({
   return (
     <div className="flex-grow flex items-center justify-center w-full h-full overflow-hidden select-none p-0">
       <div
-        className="relative bg-black rounded-2xl shadow-xl flex"
+        className="relative flex overflow-hidden w-full h-full"
         style={{
-          width: '100%',
-          height: '100%',
-          maxWidth: 'calc((100vh - 150px) * 1.25)',
-          maxHeight: 'calc(100vh - 150px)',
-          aspectRatio: '1402 / 1122',
           containerType: 'inline-size',
         }}
       >
         {/* Left panel (e.g., action card on slide 7) */}
         {hasLeftPanel && (
           <div
-            className="flex-shrink-0 flex flex-col items-center justify-center bg-[#e8f4f0] border-r-2 border-slate-700 rounded-l-2xl overflow-hidden"
+            className="flex-shrink-0 flex flex-col items-center justify-center bg-[#e8f4f0] border-r-2 border-slate-700 overflow-hidden"
             style={{ width: '26%', height: '100%' }}
           >
             <div className="flex-1 flex items-center justify-center p-[2cqw]">
@@ -182,7 +178,7 @@ export default function StoryScreen({
 
         {/* Main scene */}
         <div
-          className={`flex-1 relative overflow-hidden ${hasLeftPanel ? 'rounded-r-2xl' : 'rounded-2xl'}`}
+          className="flex-1 relative overflow-hidden"
           style={{ height: '100%' }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}

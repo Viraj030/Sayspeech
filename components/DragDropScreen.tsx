@@ -241,13 +241,8 @@ export default function DragDropScreen({
 
         {/* 1402:1122 slide canvas (Single screen layout matching PPT) */}
         <div
-          className="relative bg-black rounded-2xl shadow-xl flex flex-col overflow-hidden"
+          className="relative flex flex-col overflow-hidden w-full h-full"
           style={{
-            width: '100%',
-            height: '100%',
-            maxWidth: 'calc((100vh - 150px) * 1.25)',
-            maxHeight: 'calc(100vh - 150px)',
-            aspectRatio: '1402 / 1122',
             containerType: 'inline-size',
           }}
         >

@@ -85,13 +85,16 @@ export default function SpeechBubble({
 
   let borderClass = 'border-[0.4cqw] border-slate-800 bg-white';
   let textColorClass = 'text-slate-800';
+  let txtColor = '#1e293b';
 
   if (speaker === 'kid') {
     borderClass = 'border-[0.4cqw] border-sky-500 bg-white';
     textColorClass = 'text-sky-900';
+    txtColor = '#0c4a6e';
   } else if (speaker === 'instruction') {
     borderClass = 'border-[0.4cqw] border-indigo-400 bg-indigo-50/95';
     textColorClass = 'text-indigo-955';
+    txtColor = '#1e1b4b';
   }
 
   // Adjusted absolute layout for proportional responsive 16:9 scaling
@@ -203,12 +206,12 @@ export default function SpeechBubble({
     >
       <div className="relative w-full h-full">
         {/* Invisible sizing base */}
-        <p className="whitespace-pre-wrap leading-normal invisible select-none pointer-events-none" aria-hidden="true">
+        <p style={{ color: txtColor }} className="whitespace-pre-wrap leading-normal invisible select-none pointer-events-none" aria-hidden="true">
           {text}
         </p>
         
         {/* Visible typed overlays */}
-        <p className="absolute inset-0 whitespace-pre-wrap leading-normal">
+        <p style={{ color: txtColor }} className="absolute inset-0 whitespace-pre-wrap leading-normal">
           {hasFinishedTyping ? text : displayedText}
         </p>
       </div>

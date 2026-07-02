@@ -42,6 +42,7 @@ function Bubble({
   const isKid = dialogue.speaker === 'kid';
   const bg = isKid ? '#eff6ff' : isMom ? '#fff' : '#eef2ff';
   const border = isKid ? '#3b82f6' : isMom ? '#1e293b' : '#6366f1';
+  const txtColor = isKid ? '#0c4a6e' : isMom ? '#1e293b' : '#1e1b4b';
 
   return (
     <motion.div
@@ -67,19 +68,19 @@ function Bubble({
           boxShadow: '0 6px 20px rgba(0,0,0,0.16)',
           fontSize: 'clamp(10px, 1.7cqw, 15px)',
           fontWeight: 500,
-          color: '#1e293b',
+          color: txtColor,
           lineHeight: 1.4,
           position: 'relative',
         }}
       >
         {/* Pre-size ghost */}
-        <p style={{ visibility: 'hidden', margin: 0, whiteSpace: 'pre-wrap' }} aria-hidden>
+        <p style={{ visibility: 'hidden', margin: 0, whiteSpace: 'pre-wrap', color: txtColor }} aria-hidden>
           {dialogue.text}
         </p>
         {/* Typed overlay */}
         <p style={{
           position: 'absolute', top: '8px', left: '14px', right: '14px',
-          margin: 0, whiteSpace: 'pre-wrap'
+          margin: 0, whiteSpace: 'pre-wrap', color: txtColor
         }}>
           {done ? dialogue.text : text}
         </p>
@@ -137,13 +138,8 @@ export default function StoryItemsScreen({
   return (
     <div className="flex-grow flex items-center justify-center w-full h-full overflow-hidden select-none p-0">
       <div
-        className="relative bg-black rounded-2xl shadow-xl flex flex-col overflow-hidden"
+        className="relative flex flex-col overflow-hidden w-full h-full"
         style={{
-          width: '100%',
-          height: '100%',
-          maxWidth: 'calc((100vh - 150px) * 1.25)',
-          maxHeight: 'calc(100vh - 150px)',
-          aspectRatio: '1402 / 1122',
           containerType: 'inline-size',
         }}
       >

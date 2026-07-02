@@ -69,8 +69,7 @@ export default function MakeDosaGamePage() {
   };
 
   const handleHome = () => {
-    playSound('click');
-    router.push('/');
+    handleRestart();
   };
 
   // Auto-solve welcome and completion
