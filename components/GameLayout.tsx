@@ -69,10 +69,18 @@ export default function GameLayout({
             <span className="hidden sm:inline">Home</span>
           </button>
 
-          {/* Activity Title (uppercase bold white) */}
-          <h1 className="absolute left-1/2 -translate-x-1/2 text-sm sm:text-xl font-black text-white tracking-wider font-display drop-shadow-sm uppercase text-center truncate px-2 z-0">
-            {activityName}
-          </h1>
+          {/* Activity Title (uppercase bold white with yellow rays and curve underline) */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none select-none z-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
+              <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+              <h1 className="text-sm sm:text-2xl font-black text-white tracking-widest font-display drop-shadow-md uppercase text-center truncate">
+                {activityName}
+              </h1>
+              <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+            </div>
+            {/* Small yellow underline curve */}
+            <div className="w-[45%] h-1 sm:h-1.5 bg-[#fef08a] rounded-full mt-0.5" />
+          </div>
         </header>
 
         {/* Main Content Area (stretches dynamically, min-h-0 prevents overflow scrolling) */}

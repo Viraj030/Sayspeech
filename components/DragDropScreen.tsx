@@ -372,7 +372,7 @@ export default function DragDropScreen({
                 >
                   <div
                     className="bg-white border-2 border-slate-700 rounded-2xl shadow-lg relative"
-                    style={{ padding: '8px 14px', fontSize: 'clamp(9px, 1.6cqw, 15px)', fontWeight: 500, lineHeight: 1.4 }}
+                    style={{ padding: '8px 14px', fontSize: 'clamp(9px, 1.6cqw, 15px)', fontWeight: 500, lineHeight: 1.4, color: '#1e293b' }}
                   >
                     {dialogues[0].text}
                     <div
