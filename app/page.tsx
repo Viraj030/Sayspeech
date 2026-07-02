@@ -7,7 +7,7 @@ import { ChefHat, Play, Award, Sparkles, BookOpen } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-indigo-50/30 to-violet-50 flex flex-col font-sans select-none antialiased">
+    <div style={{ backgroundColor: '#fdfae6' }} className="min-h-screen flex flex-col font-sans select-none antialiased">
       {/* Top Hero Header */}
       <header className="max-w-5xl w-full mx-auto px-6 py-6 sm:py-8 flex justify-between items-center">
         <div className="flex items-center gap-2">
@@ -19,7 +19,7 @@ export default function Home() {
           </span>
         </div>
 
-        <span className="text-xs sm:text-sm font-bold text-slate-500 bg-white/80 border border-slate-100 px-4 py-2 rounded-2xl shadow-sm">
+        <span className="text-xs sm:text-sm font-bold text-slate-700 bg-white border border-slate-100 px-4 py-2 rounded-2xl shadow-sm">
           Speech Therapy Platform
         </span>
       </header>
@@ -43,7 +43,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-base sm:text-xl font-bold text-slate-500 leading-relaxed max-w-lg mx-auto"
+            className="text-base sm:text-xl font-bold text-slate-700 leading-relaxed max-w-lg mx-auto"
           >
             Engaging, research-backed games designed by experts to support developmental language, sequencing, and expression.
           </motion.p>
@@ -59,7 +59,7 @@ export default function Home() {
           >
             {/* Game Card */}
             <Link href="/games/make-dosa" className="group block">
-              <div className="group-hover:border-indigo-300 shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4 relative overflow-hidden group-hover:scale-[1.02]">
+              <div style={{ borderRadius: '32px' }} className="bg-white border border-slate-150 group-hover:border-indigo-300 shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4 relative overflow-hidden group-hover:scale-[1.02]">
                 {/* Visual Thumbnail */}
                 <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-indigo-50/50 flex items-center justify-center border border-slate-100 shadow-inner">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -87,7 +87,7 @@ export default function Home() {
                       <Play className="w-4 h-4 fill-current ml-0.5" />
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm font-bold text-slate-400 leading-normal">
+                  <p className="text-xs sm:text-sm font-bold text-slate-600 leading-normal">
                     Follow the narrative steps, drag cooking tools on the tawa, learn vocabulary, and practice WH questions!
                   </p>
                 </div>
@@ -111,17 +111,17 @@ export default function Home() {
       </main>
 
       {/* Footer Info */}
-      <footer className="max-w-5xl w-full mx-auto px-6 py-8 border-t border-slate-200/50 mt-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-        <p className="text-xs sm:text-sm font-bold text-slate-400">
+      <footer className="max-w-5xl w-full mx-auto px-6 py-8 border-t border-slate-200 mt-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+        <p className="text-xs sm:text-sm font-bold text-slate-500">
           © {new Date().getFullYear()} SaySpeech. All rights reserved.
         </p>
-        <div className="flex items-center gap-6 text-xs sm:text-sm font-bold text-slate-400">
+        <div className="flex items-center gap-6 text-xs sm:text-sm font-bold text-slate-500">
           <div className="flex items-center gap-1.5">
-            <BookOpen className="w-4 h-4 text-slate-300" />
+            <BookOpen className="w-4 h-4 text-slate-400" />
             <span>Interactive Learning</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Award className="w-4 h-4 text-slate-300" />
+            <Award className="w-4 h-4 text-slate-400" />
             <span>Premium UI/UX</span>
           </div>
         </div>
