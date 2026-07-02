@@ -66,7 +66,7 @@ export default function GameLayout({
             className="flex items-center gap-1.5 active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 z-10"
           >
             <Home className="w-3.5 h-3.5" />
-            <span>Home</span>
+            <span className="hidden sm:inline">Home</span>
           </button>
 
           {/* Activity Title (uppercase bold white) */}
@@ -89,19 +89,16 @@ export default function GameLayout({
             style={{
               backgroundColor: disablePrev ? '#a0a0a0' : '#ff9800',
               borderRadius: '20px',
-              padding: '10px 20px',
-              fontSize: '1rem',
-              fontWeight: 900,
               color: 'white',
               cursor: disablePrev ? 'not-allowed' : 'pointer',
               border: 'none',
               boxShadow: disablePrev ? 'none' : '0 6px 0 rgba(0, 0, 0, 0.15)',
               opacity: disablePrev ? 0.4 : 1,
             }}
-            className="flex items-center gap-1 pointer-events-auto active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 disabled:cursor-not-allowed"
+            className="flex items-center gap-1 pointer-events-auto active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 disabled:cursor-not-allowed px-3.5 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-base font-black"
           >
             <ChevronLeft className="w-4 h-4 stroke-[3px]" />
-            <span>Prev</span>
+            <span className="hidden sm:inline">Prev</span>
           </button>
 
           {/* Single-line Progress bar and label */}
@@ -121,18 +118,15 @@ export default function GameLayout({
             style={{
               backgroundColor: disableNext ? '#a0a0a0' : '#009688',
               borderRadius: '20px',
-              padding: '10px 20px',
-              fontSize: '1rem',
-              fontWeight: 900,
               color: 'white',
               cursor: disableNext ? 'not-allowed' : 'pointer',
               border: 'none',
               boxShadow: disableNext ? 'none' : '0 6px 0 rgba(0, 0, 0, 0.15)',
               opacity: disableNext ? 0.4 : 1,
             }}
-            className="flex items-center gap-1 pointer-events-auto active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 disabled:cursor-not-allowed"
+            className="flex items-center gap-1 pointer-events-auto active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 disabled:cursor-not-allowed px-3.5 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-base font-black"
           >
-            <span>Next</span>
+            <span className="hidden sm:inline">Next</span>
             <ChevronRight className="w-4 h-4 stroke-[3px]" />
           </button>
         </footer>
