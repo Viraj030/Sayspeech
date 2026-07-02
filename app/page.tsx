@@ -61,12 +61,12 @@ export default function Home() {
             <Link href="/games/make-dosa" className="group block">
               <div style={{ borderRadius: '32px' }} className="bg-white border border-slate-150 group-hover:border-indigo-300 shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4 relative overflow-hidden group-hover:scale-[1.02]">
                 {/* Visual Thumbnail */}
-                <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden bg-indigo-50/50 flex items-center justify-center border border-slate-100 shadow-inner">
+                <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/make_a_dosa_images/image_001.png"
                     alt="Make A Dosa"
-                    className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none"
                     draggable={false}
                   />
 
