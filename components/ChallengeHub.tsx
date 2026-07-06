@@ -128,8 +128,8 @@ export default function ChallengeHub({
               whileTap={{ scale: 0.97 }}
               className={`relative flex flex-col text-left p-4 rounded-[24px] border-[3px] shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer select-none outline-none group min-h-[135px] ${
                 isCompleted
-                  ? 'bg-emerald-50/40 border-emerald-500 shadow-emerald-50/30'
-                  : `${m.bgColor} ${m.borderColor} hover:border-indigo-400 hover:shadow-indigo-100/50`
+                  ? 'bg-emerald-50 border-emerald-500'
+                  : `${m.bgColor} ${m.borderColor} hover:border-indigo-400`
               }`}
             >
               {/* Floating Large Soft Background Icon */}
@@ -145,12 +145,12 @@ export default function ChallengeHub({
 
                 {/* Status indicator */}
                 {isCompleted ? (
-                  <span className="flex items-center gap-1 bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[9px] font-black border border-emerald-200 shadow-sm shrink-0">
-                    <CheckCircle2 className="w-3 h-3 fill-current text-emerald-600" />
+                  <span style={{ backgroundColor: '#d1fae5', color: '#065f46', borderColor: '#6ee7b7' }} className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black border shadow-sm shrink-0">
+                    <CheckCircle2 className="w-3 h-3" style={{ color: '#059669' }} />
                     <span>COMPLETED</span>
                   </span>
                 ) : (
-                  <span className="bg-slate-200/80 text-slate-650 px-2 py-0.5 rounded-full text-[8px] font-black tracking-wider uppercase border border-slate-300 shadow-sm shrink-0">
+                  <span style={{ backgroundColor: '#e2e8f0', color: '#334155', borderColor: '#94a3b8' }} className="px-2 py-0.5 rounded-full text-[8px] font-black tracking-wider uppercase border shadow-sm shrink-0">
                     PLAY
                   </span>
                 )}
@@ -158,7 +158,7 @@ export default function ChallengeHub({
 
               {/* Title & Description */}
               <div className="flex flex-col gap-0.5 z-10 w-full flex-grow">
-                <h3 className="text-xs sm:text-sm font-black text-slate-800 group-hover:text-indigo-600 transition-colors leading-tight">
+                <h3 style={{ color: '#1e293b' }} className="text-xs sm:text-sm font-black leading-tight group-hover:text-indigo-600 transition-colors">
                   {m.title}
                 </h3>
                 <p className="text-[11px] font-bold text-slate-500 leading-snug line-clamp-2">
