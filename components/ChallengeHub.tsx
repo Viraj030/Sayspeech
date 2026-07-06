@@ -126,11 +126,10 @@ export default function ChallengeHub({
               transition={{ delay: index * 0.08, type: 'spring', stiffness: 100 }}
               whileHover={{ scale: 1.03, y: -4 }}
               whileTap={{ scale: 0.97 }}
-              className={`relative flex flex-col text-left p-4 rounded-[24px] border-[3px] shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer select-none outline-none group min-h-[135px] ${
-                isCompleted
-                  ? 'bg-emerald-50 border-emerald-500'
-                  : `${m.bgColor} ${m.borderColor} hover:border-indigo-400`
-              }`}
+              className={`relative flex flex-col text-left p-4 rounded-[24px] border-[3px] shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer select-none outline-none group min-h-[135px] ${isCompleted
+                ? 'bg-emerald-50 border-emerald-500'
+                : `${m.bgColor} ${m.borderColor} hover:border-indigo-400`
+                }`}
             >
               {/* Floating Large Soft Background Icon */}
               <div className="absolute right-2 -bottom-2 text-6xl opacity-[0.06] select-none pointer-events-none group-hover:scale-110 transition-transform duration-300">
@@ -167,11 +166,11 @@ export default function ChallengeHub({
               </div>
 
               {/* Completed Decorative Ribbon */}
-              {isCompleted && (
+              {/* {isCompleted && (
                 <div className="absolute -right-12 -top-12 w-24 h-24 bg-emerald-500 rotate-45 flex items-end justify-center pb-1 shadow-md pointer-events-none border border-emerald-600">
                   <CheckCircle2 className="w-4 h-4 text-white -rotate-45 mb-1.5" />
                 </div>
-              )}
+              )} */}
             </motion.button>
           );
         })}

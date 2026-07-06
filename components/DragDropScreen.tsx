@@ -35,23 +35,21 @@ function DraggableCard({ option, disabled }: { option: DragOption; disabled: boo
       {...listeners}
       {...attributes}
       className={[
-        'flex flex-col items-center select-none touch-none bg-transparent border-0 shadow-none w-full',
-        'px-[1cqw] py-[1.5cqw]',
-        disabled ? 'cursor-default opacity-45' : 'cursor-grab active:cursor-grabbing hover:scale-105',
-        'transition-all duration-150',
+        'select-none touch-none flex flex-col items-center',
+        disabled ? 'cursor-default opacity-45' : 'cursor-grab active:cursor-grabbing',
+        'transition-opacity duration-150',
         isDragging ? 'opacity-20' : '',
       ].join(' ')}
-      style={{ userSelect: 'none' }}
+      style={{ userSelect: 'none', width: '200px' }}
     >
-      <div style={{ width: '100%', height: '14cqw', maxWidth: 100, maxHeight: 85 }} className="flex items-center justify-center pointer-events-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={option.image}
-          alt={option.label}
-          className="max-w-full max-h-full object-contain pointer-events-none"
-          draggable={false}
-        />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={option.image}
+        alt={option.label}
+        draggable={false}
+        className="pointer-events-none block"
+        style={{ width: '200px', height: 'auto' }}
+      />
       {option.label && (
         <span
           className="font-extrabold text-slate-800 text-center leading-tight whitespace-nowrap mt-1 select-none pointer-events-none"
@@ -71,18 +69,17 @@ function DraggableCard({ option, disabled }: { option: DragOption; disabled: boo
 function FloatingCard({ option }: { option: DragOption }) {
   return (
     <div
-      className="flex flex-col items-center bg-transparent border-0 shadow-none px-4 py-2"
-      style={{ pointerEvents: 'none', transform: 'scale(1.15)' }}
+      className="flex flex-col items-center"
+      style={{ pointerEvents: 'none', width: 180, transform: 'scale(1.1)' }}
     >
-      <div style={{ width: 110, height: 110 }} className="flex items-center justify-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={option.image}
-          alt={option.label}
-          className="max-w-full max-h-full object-contain"
-          draggable={false}
-        />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={option.image}
+        alt={option.label}
+        className="w-full object-contain"
+        style={{ maxHeight: 180 }}
+        draggable={false}
+      />
       {option.label && (
         <span className="text-xs font-black text-slate-800 text-center whitespace-nowrap mt-1">
           {option.label}
@@ -267,7 +264,7 @@ export default function DragDropScreen({
                   <div className="text-slate-400 text-[1.5cqw] font-bold select-none cursor-default">▲</div>
 
                   {/* Dashed scroll wrapper for draggable option card */}
-                  <div className="border-[2.5px] border-dashed border-slate-400 rounded-2xl w-[86%] my-[1cqw] p-[1cqw] flex-1 flex flex-col justify-around items-center gap-[1.5cqw]">
+                  <div className="border-[2.5px] border-dashed border-slate-400 rounded-2xl w-[86%] my-[1cqw] p-[1cqw] px-0 flex-1 flex flex-col justify-around items-center gap-[1.5cqw]">
                     {options.map((option) => (
                       <motion.div
                         key={option.id}

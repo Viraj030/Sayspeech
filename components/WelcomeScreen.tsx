@@ -55,7 +55,7 @@ export default function WelcomeScreen({ title, description, onStart }: WelcomeSc
           <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-[#4caf50] shrink-0">
             <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
           </div>
-          <span className="tracking-wide">Start Game</span>
+          <span className="tracking-wide">Start Activity</span>
         </motion.button>
       </div>
 

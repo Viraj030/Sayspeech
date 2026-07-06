@@ -34,7 +34,7 @@ import { GameScreen } from '../types/game';
 // image_030.png  Kitchen: folded dosa flipped/ready (full-res cooking background)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const IMG = (n: string) => `/make_a_dosa_images/${n}`;
+const IMG = (n: string) => `/make_a_dosa_images/${n}?v=2`;
 
 export const makeDosaData: GameScreen[] = [
 
