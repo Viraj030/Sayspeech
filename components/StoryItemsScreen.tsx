@@ -1,109 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { StoryItem, DialogueBubble as DialogueType } from '../types/game';
-
-// ── Typing bubble ─────────────────────────────────────────────────────────────
-function Bubble({
-  dialogue,
-  visible,
-  onDone,
-}: {
-  dialogue: DialogueType;
-  visible: boolean;
-  onDone: () => void;
-}) {
-  const [text, setText] = useState('');
-  const [done, setDone] = useState(false);
-  const ref = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    if (!visible) return;
-    setText('');
-    setDone(false);
-    let i = 0;
-    ref.current = setInterval(() => {
-      i++;
-      setText(dialogue.text.substring(0, i));
-      if (i >= dialogue.text.length) {
-        clearInterval(ref.current!);
-        setDone(true);
-        onDone();
-      }
-    }, 22);
-    return () => { if (ref.current) clearInterval(ref.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, dialogue.id]);
-
-  if (!visible) return null;
-
-  const isMom = dialogue.speaker === 'mom';
-  const isKid = dialogue.speaker === 'kid';
-  const bg = isKid ? '#eff6ff' : isMom ? '#fff' : '#eef2ff';
-  const border = isKid ? '#3b82f6' : isMom ? '#1e293b' : '#6366f1';
-  const txtColor = isKid ? '#0c4a6e' : isMom ? '#1e293b' : '#1e1b4b';
-
-  return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-      style={{
-        position: 'absolute',
-        top: `${dialogue.position.top}%`,
-        left: `${dialogue.position.left}%`,
-        zIndex: 30,
-        maxWidth: '42%',
-        minWidth: '16%',
-        pointerEvents: 'none',
-      }}
-    >
-      <div
-        style={{
-          background: bg,
-          border: `2.5px solid ${border}`,
-          borderRadius: '16px',
-          padding: '8px 14px',
-          boxShadow: '0 6px 20px rgba(0,0,0,0.16)',
-          fontSize: 'clamp(10px, 1.7cqw, 15px)',
-          fontWeight: 500,
-          color: txtColor,
-          lineHeight: 1.4,
-          position: 'relative',
-        }}
-      >
-        {/* Pre-size ghost */}
-        <p style={{ visibility: 'hidden', margin: 0, whiteSpace: 'pre-wrap', color: txtColor }} aria-hidden>
-          {dialogue.text}
-        </p>
-        {/* Typed overlay */}
-        <p style={{
-          position: 'absolute', top: '8px', left: '14px', right: '14px',
-          margin: 0, whiteSpace: 'pre-wrap', color: txtColor
-        }}>
-          {done ? dialogue.text : text}
-        </p>
-        {/* Tail */}
-        {(() => {
-          const base: React.CSSProperties = {
-            position: 'absolute',
-            width: 12, height: 12,
-            background: bg,
-            border: `2.5px solid ${border}`,
-            transform: 'rotate(45deg)',
-          };
-          const td = dialogue.tailDirection;
-          if (td === 'down' || td === 'down-left')
-            return <div style={{ ...base, bottom: -7, left: td === 'down-left' ? '15%' : '35%', borderTop: 'none', borderLeft: 'none' }} />;
-          if (td === 'down-right')
-            return <div style={{ ...base, bottom: -7, right: '15%', borderTop: 'none', borderLeft: 'none' }} />;
-          return null;
-        })()}
-      </div>
-    </motion.div>
-  );
-}
+import SpeechBubble from './SpeechBubble';
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 interface StoryItemsScreenProps {
@@ -155,17 +55,21 @@ export default function StoryItemsScreen({
 
           {/* Dialogue bubbles */}
           {dialogues.map((d, i) => (
-            <Bubble
+            <SpeechBubble
               key={`${d.id}-${image}`}
-              dialogue={d}
-              visible={i < visibleCount}
-              onDone={() => handleBubbleDone(i)}
+              speaker={d.speaker}
+              text={d.text}
+              position={d.position}
+              tailDirection={d.tailDirection}
+              onComplete={() => handleBubbleDone(i)}
+              delay={0}
+              maxWidth="42cqw"
             />
           ))}
 
           {/* ── Static ingredient labels positioned at the bottom table counter ── */}
           <div
-            className="absolute bottom-[3%] left-0 right-0 flex items-center justify-around bg-transparent"
+            className="absolute bottom-[10%] left-0 right-0 flex items-center justify-around bg-transparent"
             style={{ height: '22%' }}
           >
             {items.map((item, i) => (
@@ -197,3 +101,5 @@ export default function StoryItemsScreen({
     </div>
   );
 }
+
+

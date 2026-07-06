@@ -155,7 +155,7 @@ export default function SequenceScreen({
       if (isCorrect) {
         playSound('correct');
         setIsWrong(false);
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.65 } });
+        confetti({ particleCount: 80, spread: 60, origin: { x: 0.5, y: 0.5 } });
         onSolved();
       } else {
         playSound('wrong');

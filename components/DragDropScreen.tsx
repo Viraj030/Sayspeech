@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Check } from 'lucide-react';
 import { playSound } from '../lib/sound';
+import SpeechBubble from './SpeechBubble';
 import { DragOption, DialogueBubble as DialogueType, OverlayImage } from '../types/game';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -42,7 +43,7 @@ function DraggableCard({ option, disabled }: { option: DragOption; disabled: boo
       ].join(' ')}
       style={{ userSelect: 'none' }}
     >
-      <div style={{ width: '100%', height: '12cqw', maxWidth: 90, maxHeight: 75 }} className="flex items-center justify-center pointer-events-none">
+      <div style={{ width: '100%', height: '14cqw', maxWidth: 100, maxHeight: 85 }} className="flex items-center justify-center pointer-events-none">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={option.image}
@@ -51,12 +52,14 @@ function DraggableCard({ option, disabled }: { option: DragOption; disabled: boo
           draggable={false}
         />
       </div>
-      <span
-        className="font-extrabold text-slate-800 text-center leading-tight whitespace-nowrap mt-1 select-none pointer-events-none"
-        style={{ fontSize: 'clamp(9px, 1.6cqw, 15px)' }}
-      >
-        {option.label}
-      </span>
+      {option.label && (
+        <span
+          className="font-extrabold text-slate-800 text-center leading-tight whitespace-nowrap mt-1 select-none pointer-events-none"
+          style={{ fontSize: 'clamp(10px, 1.8cqw, 16px)' }}
+        >
+          {option.label}
+        </span>
+      )}
     </div>
   );
 }
@@ -80,9 +83,11 @@ function FloatingCard({ option }: { option: DragOption }) {
           draggable={false}
         />
       </div>
-      <span className="text-xs font-black text-slate-800 text-center whitespace-nowrap mt-1">
-        {option.label}
-      </span>
+      {option.label && (
+        <span className="text-xs font-black text-slate-800 text-center whitespace-nowrap mt-1">
+          {option.label}
+        </span>
+      )}
     </div>
   );
 }
@@ -179,7 +184,7 @@ export default function DragDropScreen({
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 100, tolerance: 8 } })
+    useSensor(TouchSensor, { activationConstraint: { delay: 50, tolerance: 10 } })
   );
 
   const activeOption = options.find((o) => o.id === activeId) ?? null;
@@ -211,7 +216,7 @@ export default function DragDropScreen({
         setShowSuccessOverlay(true);
         setShowSuccessBadge(true);
         playSound('correct');
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.65 } });
+        confetti({ particleCount: 80, spread: 60, origin: { x: 0.5, y: 0.5 } });
 
         // STATE 2: Show successOverlay + badge for 2 seconds (2000ms)
         setTimeout(() => {
@@ -357,36 +362,25 @@ export default function DragDropScreen({
               </AnimatePresence>
 
               {/* Dialogue bubble */}
-              {!isSolved && dialogues.length > 0 && (
-                <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 22, delay: 0.2 }}
-                  style={{
-                    position: 'absolute',
-                    top: `${dialogues[0].position.top}%`,
-                    left: `${dialogues[0].position.left}%`,
-                    maxWidth: '55%',
-                    zIndex: 30,
-                  }}
-                >
-                  <div
-                    className="bg-white border-2 border-slate-700 rounded-2xl shadow-lg relative"
-                    style={{ padding: '8px 14px', fontSize: 'clamp(9px, 1.6cqw, 15px)', fontWeight: 500, lineHeight: 1.4, color: '#1e293b' }}
-                  >
-                    {dialogues[0].text}
-                    <div
-                      style={{
-                        position: 'absolute', bottom: -7, left: '30%',
-                        width: 12, height: 12,
-                        background: '#fff', border: '2px solid #1e293b',
-                        transform: 'rotate(45deg)',
-                        borderTop: 'none', borderLeft: 'none',
-                      }}
-                    />
-                  </div>
-                </motion.div>
-              )}
+              {(() => {
+                const activeDialogue = isCompletedState
+                  ? dialogues.find((d) => d.showAfterSolve)
+                  : dialogues.find((d) => !d.showAfterSolve);
+
+                if (!activeDialogue) return null;
+
+                return (
+                  <SpeechBubble
+                    key={`drag-bubble-${activeDialogue.id}-${isCompletedState}`}
+                    speaker={activeDialogue.speaker}
+                    text={activeDialogue.text}
+                    position={activeDialogue.position}
+                    tailDirection={activeDialogue.tailDirection}
+                    maxWidth="42cqw"
+                  />
+                );
+              })()}
+
 
               {/* Success badge overlay */}
               <AnimatePresence>

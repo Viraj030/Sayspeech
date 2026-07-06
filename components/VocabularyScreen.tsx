@@ -51,7 +51,7 @@ export default function VocabularyScreen({
 
     if (optionId === correctOptionId) {
       playSound('correct');
-      confetti({ particleCount: 80, spread: 60, origin: { y: 0.65 } });
+      confetti({ particleCount: 80, spread: 60, origin: { x: 0.5, y: 0.5 } });
       onSolved();
     } else {
       playSound('wrong');

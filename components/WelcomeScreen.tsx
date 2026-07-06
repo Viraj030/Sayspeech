@@ -60,7 +60,7 @@ export default function WelcomeScreen({ title, description, onStart }: WelcomeSc
       </div>
 
       {/* Right side: Image Banner with thick white frame */}
-      <div className="relative w-[180px] sm:w-[360px] aspect-[4/3] rounded-[36px] overflow-hidden shadow-2xl border-[12px] border-white bg-white flex items-center justify-center p-0 shrink-0">
+      <div className="relative w-[180px] sm:w-[360px] aspect-[4/3] rounded-[36px] overflow-hidden shadow-2xl flex items-center justify-center p-0 shrink-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/make_a_dosa_images/image_001.png"

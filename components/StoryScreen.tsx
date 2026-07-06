@@ -1,116 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { DialogueBubble as DialogueType } from '../types/game';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Bubble: types text in, then stays — never disappears
-// ─────────────────────────────────────────────────────────────────────────────
-function Bubble({
-  dialogue,
-  visible,
-  onDone,
-}: {
-  dialogue: DialogueType;
-  visible: boolean;
-  onDone: () => void;
-}) {
-  const [text, setText] = useState('');
-  const [done, setDone] = useState(false);
-  const ref = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    if (!visible) return;
-    setText('');
-    setDone(false);
-    let i = 0;
-    ref.current = setInterval(() => {
-      i++;
-      setText(dialogue.text.substring(0, i));
-      if (i >= dialogue.text.length) {
-        clearInterval(ref.current!);
-        setDone(true);
-        onDone();
-      }
-    }, 22);
-    return () => { if (ref.current) clearInterval(ref.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, dialogue.id]);
-
-  if (!visible) return null;
-
-  const isKid = dialogue.speaker === 'kid';
-  const isInstruction = dialogue.speaker === 'instruction';
-  const bg = isKid ? '#eff6ff' : isInstruction ? '#eef2ff' : '#ffffff';
-  const border = isKid ? '#3b82f6' : isInstruction ? '#6366f1' : '#1e293b';
-  const txtColor = isKid ? '#0c4a6e' : isInstruction ? '#1e1b4b' : '#1e293b';
-
-  return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-      style={{
-        position: 'absolute',
-        top: `${dialogue.position.top}%`,
-        left: `${dialogue.position.left}%`,
-        zIndex: 30,
-        maxWidth: '44%',
-        minWidth: '14%',
-        pointerEvents: 'none',
-      }}
-    >
-      <div
-        style={{
-          background: bg,
-          border: `2.5px solid ${border}`,
-          borderRadius: 16,
-          padding: '8px 14px',
-          boxShadow: '0 6px 20px rgba(0,0,0,0.16)',
-          fontSize: 'clamp(10px, 1.7cqw, 15px)',
-          fontWeight: 500,
-          color: txtColor,
-          lineHeight: 1.4,
-          position: 'relative',
-        }}
-      >
-        {/* Ghost text pre-sizes the bubble */}
-        <p style={{ visibility: 'hidden', margin: 0, whiteSpace: 'pre-wrap', color: txtColor }} aria-hidden>
-          {dialogue.text}
-        </p>
-        {/* Visible typed overlay */}
-        <p style={{
-          position: 'absolute', top: 8, left: 14, right: 14,
-          margin: 0, whiteSpace: 'pre-wrap', color: txtColor,
-        }}>
-          {done ? dialogue.text : text}
-        </p>
-
-        {/* Tail */}
-        {!isInstruction && (() => {
-          const base: React.CSSProperties = {
-            position: 'absolute',
-            width: 12, height: 12,
-            background: bg,
-            border: `2.5px solid ${border}`,
-            transform: 'rotate(45deg)',
-          };
-          const td = dialogue.tailDirection;
-          if (td === 'down' || td === 'down-left')
-            return <div style={{ ...base, bottom: -7, left: td === 'down-left' ? '15%' : '35%', borderTop: 'none', borderLeft: 'none' }} />;
-          if (td === 'down-right')
-            return <div style={{ ...base, bottom: -7, right: '15%', borderTop: 'none', borderLeft: 'none' }} />;
-          if (td === 'left')
-            return <div style={{ ...base, left: -7, top: '35%', borderRight: 'none', borderTop: 'none' }} />;
-          if (td === 'right')
-            return <div style={{ ...base, right: -7, top: '35%', borderLeft: 'none', borderBottom: 'none' }} />;
-          return <div style={{ ...base, bottom: -7, left: '30%', borderTop: 'none', borderLeft: 'none' }} />;
-        })()}
-      </div>
-    </motion.div>
-  );
-}
+import SpeechBubble from './SpeechBubble';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // StoryScreen
@@ -121,6 +14,8 @@ interface StoryScreenProps {
   onDialogueComplete?: () => void;
   leftPanelImage?: string;
   initialOverlays?: { src: string; top: number; left: number; width: number; height: number }[];
+  bottomItems?: { id: string; image: string; label: string }[];
+  showBottomLabels?: boolean;
 }
 
 export default function StoryScreen({
@@ -129,6 +24,8 @@ export default function StoryScreen({
   onDialogueComplete,
   leftPanelImage,
   initialOverlays = [],
+  bottomItems = [],
+  showBottomLabels = false,
 }: StoryScreenProps) {
   const [visibleCount, setVisibleCount] = useState(1);
 
@@ -205,17 +102,58 @@ export default function StoryScreen({
             />
           ))}
 
-          {/* Dialogue bubbles — all stay visible once shown */}
-          {dialogues.map((d, i) => (
-            <Bubble
-              key={`${d.id}-${image}`}
-              dialogue={d}
-              visible={i < visibleCount}
-              onDone={() => handleBubbleDone(i)}
-            />
-          ))}
+          {/* Bottom items row */}
+          {bottomItems && bottomItems.length > 0 && (
+            <div
+              className="absolute bottom-[10%] left-0 right-0 flex items-end justify-around bg-transparent px-4"
+              style={{ height: '18%', zIndex: 28 }}
+            >
+              {bottomItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col items-center select-none"
+                  style={{ width: '18%' }}
+                >
+                  <div className="flex items-center justify-center" style={{ height: '10cqw', maxHeight: '75px' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.image}
+                      alt={item.label}
+                      className="max-h-full max-w-full object-contain pointer-events-none"
+                      draggable={false}
+                    />
+                  </div>
+                  {/* {showBottomLabels && (
+                    <span
+                      className="font-extrabold text-slate-800 text-center leading-tight whitespace-nowrap mt-1 select-none border-2 border-slate-700 bg-white rounded shadow-sm"
+                      style={{ fontSize: 'clamp(9px, 1.4cqw, 13px)', padding: '2px 6px' }}
+                    >
+                      {item.label}
+                    </span>
+                  )} */}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Dialogue bubbles — revealed one at a time via visibleCount */}
+          {dialogues.map((d, i) =>
+            i < visibleCount ? (
+              <SpeechBubble
+                key={`${d.id}-${image}`}
+                speaker={d.speaker}
+                text={d.text}
+                position={d.position}
+                tailDirection={d.tailDirection}
+                onComplete={() => handleBubbleDone(i)}
+                delay={0}
+                maxWidth="42cqw"
+              />
+            ) : null
+          )}
         </div>
       </div>
     </div>
   );
 }
+

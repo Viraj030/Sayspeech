@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Home, Volume2, VolumeX, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, Volume2, VolumeX, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
 import ProgressBar from './ProgressBar';
 
 interface GameLayoutProps {
@@ -15,6 +15,9 @@ interface GameLayoutProps {
   children: React.ReactNode;
   onHome: () => void;
   isWide?: boolean;
+  hideFooter?: boolean;
+  onReset?: () => void;
+  resetLabel?: string;
 }
 
 export default function GameLayout({
@@ -27,7 +30,10 @@ export default function GameLayout({
   disablePrev,
   children,
   onHome,
-  isWide = false
+  isWide = false,
+  hideFooter = false,
+  onReset,
+  resetLabel
 }: GameLayoutProps) {
   const [audioMuted, setAudioMuted] = useState(false);
 
@@ -81,6 +87,29 @@ export default function GameLayout({
             {/* Small yellow underline curve */}
             <div className="w-[45%] h-1 sm:h-1.5 bg-[#fef08a] rounded-full mt-0.5" />
           </div>
+
+          {/* RESET Button */}
+          {onReset && (
+            <button
+              onClick={onReset}
+              style={{
+                backgroundColor: '#3f51b5',
+                borderRadius: '20px',
+                padding: '8px 16px',
+                fontSize: '0.85rem',
+                fontWeight: 900,
+                color: 'white',
+                cursor: 'pointer',
+                border: 'none',
+                boxShadow: '0 6px 0 rgba(0, 0, 0, 0.15)',
+                marginLeft: 'auto',
+              }}
+              className="flex items-center gap-1.5 active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 z-10 group"
+            >
+              <RefreshCw className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-500" />
+              <span className="hidden sm:inline">{resetLabel || 'Reset'}</span>
+            </button>
+          )}
         </header>
 
         {/* Main Content Area (stretches dynamically, min-h-0 prevents overflow scrolling) */}
@@ -89,8 +118,9 @@ export default function GameLayout({
         </main>
 
         {/* Floating absolute Footer */}
-        <footer className="absolute bottom-6 left-0 right-0 flex items-center justify-between px-6 z-20 pointer-events-none select-none">
-          {/* PREV button */}
+        {!hideFooter && (
+          <footer className="absolute bottom-6 left-0 right-0 flex items-center justify-between px-6 z-20 pointer-events-none select-none">
+            {/* PREV button */}
           <button
             onClick={onPrev}
             disabled={disablePrev}
@@ -137,7 +167,8 @@ export default function GameLayout({
             <span className="hidden sm:inline">Next</span>
             <ChevronRight className="w-4 h-4 stroke-[3px]" />
           </button>
-        </footer>
+          </footer>
+        )}
       </div>
     </div>
   );

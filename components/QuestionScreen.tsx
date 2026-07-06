@@ -52,7 +52,7 @@ export default function QuestionScreen({
 
     if (option.isCorrect) {
       playSound('correct');
-      confetti({ particleCount: 80, spread: 60, origin: { y: 0.65 } });
+      confetti({ particleCount: 80, spread: 60, origin: { x: 0.5, y: 0.5 } });
       onSolved();
     } else {
       playSound('wrong');
@@ -84,7 +84,7 @@ export default function QuestionScreen({
           const isCorrect = option.isCorrect && isSolved;
           const isShaking = shakeId === option.id;
 
-          let btnClass = 'border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/10 text-slate-700 bg-white';
+          let btnClass = 'border-slate-200 text-slate-700 bg-white';
           let iconElement = null;
 
           if (isCorrect) {
@@ -112,11 +112,12 @@ export default function QuestionScreen({
               onClick={() => handleOptionClick(option)}
               disabled={isSolved && !isCorrect}
               className={`relative w-full p-3.5 sm:p-4 pr-12 rounded-xl border-2 flex items-center justify-center font-extrabold text-sm sm:text-base transition-all shadow-sm ${btnClass} ${
-                isSolved && !isCorrect ? 'opacity-50 cursor-default' : 'active:scale-[0.98] cursor-pointer'
+                isSolved && !isCorrect ? 'opacity-50 cursor-default' : 'cursor-pointer'
               }`}
               animate={isShaking ? { x: [-8, 8, -8, 8, -4, 4, 0] } : isCorrect ? { scale: [1, 1.03, 1] } : {}}
               transition={{ duration: 0.4 }}
-              whileHover={isSolved ? {} : { scale: 1.01 }}
+              whileHover={isSolved ? {} : { scale: 1.025 }}
+              whileTap={isSolved ? {} : { scale: 0.98 }}
             >
               <span className="text-center w-full break-words">{option.text}</span>
               <AnimatePresence>

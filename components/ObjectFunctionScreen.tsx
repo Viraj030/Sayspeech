@@ -64,7 +64,7 @@ export default function ObjectFunctionScreen({
           setSelectedOptionText(null);
         }, 1200);
       } else {
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.65 } });
+        confetti({ particleCount: 80, spread: 60, origin: { x: 0.5, y: 0.5 } });
         onSolved();
       }
     } else {
@@ -83,7 +83,7 @@ export default function ObjectFunctionScreen({
       </span>
 
       {/* Responsive layout: flex-col on mobile, grid on desktop */}
-      <div className="w-full flex flex-col sm:grid sm:grid-cols-[160px_1fr] sm:grid-rows-[auto_1fr] gap-3 sm:gap-x-8 sm:gap-y-2 mt-1 max-w-2xl px-4 items-center sm:items-start justify-center">
+      <div className="w-full flex flex-col sm:grid sm:grid-cols-[260px_1fr] sm:grid-rows-[auto_1fr] gap-3 sm:gap-x-8 sm:gap-y-2 mt-1 max-w-2xl px-4 items-center sm:items-start justify-center">
         
         {/* Top: Compact Question Info (col-start-2 row-start-1 on desktop) */}
         <div className="w-full flex flex-col gap-1 sm:col-start-2 sm:row-start-1 text-center sm:text-left">
@@ -98,7 +98,7 @@ export default function ObjectFunctionScreen({
         </div>
 
         {/* Middle/Left: Compact Object Image Card (col-start-1 row-start-1 row-span-2 on desktop) */}
-        <div className="w-20 h-20 sm:w-40 sm:h-40 bg-white border-2 border-slate-800 rounded-2xl p-2.5 shadow-md flex items-center justify-center shrink-0 sm:col-start-1 sm:row-start-1 sm:row-span-2">
+        <div className="w-36 h-36 sm:w-60 sm:h-60 bg-gradient-to-br from-violet-50/80 via-white to-white border-[3px] border-slate-800 rounded-3xl p-4 shadow-xl flex items-center justify-center shrink-0 sm:col-start-1 sm:row-start-1 sm:row-span-2 hover:scale-[1.02] transition-transform duration-300">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image}
@@ -116,7 +116,7 @@ export default function ObjectFunctionScreen({
             const isCorrect = option.isCorrect && isSelected;
             const isShaking = shakeOption === option.text;
 
-            let btnClass = 'border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/10 text-slate-700 bg-white';
+            let btnClass = 'border-slate-200 text-slate-700 bg-white';
             let iconElement = null;
 
             if (isCorrect) {
@@ -134,10 +134,12 @@ export default function ObjectFunctionScreen({
                 key={`${option.text}-${idx}`}
                 onClick={() => handleOptionClick(option)}
                 disabled={isSolved && !isCorrect}
-                className={`w-full text-left p-2.5 sm:p-3.5 rounded-xl border-2 flex items-center justify-between font-extrabold text-xs sm:text-sm shadow-sm transition-all ${btnClass} ${isSolved && !isCorrect ? 'cursor-default' : 'active:scale-[0.99] cursor-pointer'
+                className={`w-full text-left p-2.5 sm:p-3.5 rounded-xl border-2 flex items-center justify-between font-extrabold text-xs sm:text-sm shadow-sm transition-all ${btnClass} ${isSolved && !isCorrect ? 'cursor-default' : 'cursor-pointer'
                   }`}
                 animate={isShaking ? { x: [-8, 8, -8, 8, -4, 4, 0] } : {}}
                 transition={{ duration: 0.5 }}
+                whileHover={isSolved && !isCorrect ? {} : { scale: 1.025 }}
+                whileTap={isSolved && !isCorrect ? {} : { scale: 0.98 }}
               >
                 <span className="flex-1 pr-2 truncate">{option.text}</span>
                 <AnimatePresence mode="wait">

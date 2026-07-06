@@ -17,18 +17,18 @@ export default function CompletionScreen({ title, subtitle, onRestart }: Complet
     confetti({
       particleCount: 80,
       spread: 60,
-      origin: { x: 0.1, y: 0.6 }
+      origin: { x: 0.5, y: 0.5 }
     });
     confetti({
       particleCount: 80,
       spread: 60,
-      origin: { x: 0.9, y: 0.6 }
+      origin: { x: 0.5, y: 0.5 }
     });
     const timer = setTimeout(() => {
       confetti({
         particleCount: 120,
         spread: 80,
-        origin: { y: 0.5 }
+        origin: { x: 0.5, y: 0.5 }
       });
     }, 500);
 

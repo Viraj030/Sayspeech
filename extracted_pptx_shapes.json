@@ -1,0 +1,279 @@
+{
+  "slide-3": [
+    {
+      "text": "Today we’re going to make a masala dosa! Are you ready?",
+      "emu": {
+        "x": 6442665,
+        "y": 0,
+        "cx": 2352992,
+        "cy": 1317171
+      },
+      "percent": {
+        "left": 52.84,
+        "top": 0,
+        "width": 19.3,
+        "height": 19.21
+      }
+    },
+    {
+      "text": "Yes! I’m so hungry!",
+      "emu": {
+        "x": 8665028,
+        "y": 1208315,
+        "cx": 1694271,
+        "cy": 793524
+      },
+      "percent": {
+        "left": 71.07,
+        "top": 17.62,
+        "width": 13.9,
+        "height": 11.57
+      }
+    }
+  ],
+  "slide-4": [
+    {
+      "text": "First, let’s put some dosa batter.",
+      "emu": {
+        "x": 6442665,
+        "y": 0,
+        "cx": 1834324,
+        "cy": 1023257
+      },
+      "percent": {
+        "left": 52.84,
+        "top": 0,
+        "width": 15.05,
+        "height": 14.92
+      }
+    },
+    {
+      "text": "Dosa batter",
+      "emu": {
+        "x": 2622535,
+        "y": 6596264,
+        "cx": 1447800,
+        "cy": 220969
+      },
+      "percent": {
+        "left": 21.51,
+        "top": 96.18,
+        "width": 11.88,
+        "height": 3.22
+      }
+    },
+    {
+      "text": "Potato filling",
+      "emu": {
+        "x": 4520898,
+        "y": 6595785,
+        "cx": 1447800,
+        "cy": 220969
+      },
+      "percent": {
+        "left": 37.08,
+        "top": 96.18,
+        "width": 11.88,
+        "height": 3.22
+      }
+    },
+    {
+      "text": "Oil",
+      "emu": {
+        "x": 6387567,
+        "y": 6595785,
+        "cx": 808834,
+        "cy": 278894
+      },
+      "percent": {
+        "left": 52.39,
+        "top": 96.18,
+        "width": 6.63,
+        "height": 4.07
+      }
+    },
+    {
+      "text": "Ladle",
+      "emu": {
+        "x": 7359827,
+        "y": 6624747,
+        "cx": 1447800,
+        "cy": 220969
+      },
+      "percent": {
+        "left": 60.37,
+        "top": 96.6,
+        "width": 11.88,
+        "height": 3.22
+      }
+    },
+    {
+      "text": "Plate",
+      "emu": {
+        "x": 8971053,
+        "y": 6595784,
+        "cx": 1447800,
+        "cy": 220969
+      },
+      "percent": {
+        "left": 73.58,
+        "top": 96.18,
+        "width": 11.88,
+        "height": 3.22
+      }
+    }
+  ],
+  "slide-5": [
+    {
+      "text": "Can you help me put the batter on the tawa?",
+      "emu": {
+        "x": 7881461,
+        "y": 0,
+        "cx": 2133395,
+        "cy": 1328057
+      },
+      "percent": {
+        "left": 64.64,
+        "top": 0,
+        "width": 17.5,
+        "height": 19.37
+      }
+    }
+  ],
+  "slide-6": [
+    {
+      "text": "Let’s make it bigger.",
+      "emu": {
+        "x": 8033862,
+        "y": -13409,
+        "cx": 1834324,
+        "cy": 1023257
+      },
+      "percent": {
+        "left": 65.89,
+        "top": -0.2,
+        "width": 15.05,
+        "height": 14.92
+      }
+    }
+  ],
+  "slide-7": [
+    {
+      "text": "Now it’s nicely spread on the tawa.",
+      "emu": {
+        "x": 7792493,
+        "y": -18518,
+        "cx": 2026421,
+        "cy": 1234808
+      },
+      "percent": {
+        "left": 63.91,
+        "top": -0.27,
+        "width": 16.62,
+        "height": 18.01
+      }
+    }
+  ],
+  "slide-8": [
+    {
+      "text": "Let’s put some potato masala.",
+      "emu": {
+        "x": 7653846,
+        "y": 0,
+        "cx": 1834324,
+        "cy": 1023257
+      },
+      "percent": {
+        "left": 62.78,
+        "top": 0,
+        "width": 15.05,
+        "height": 14.92
+      }
+    }
+  ],
+  "slide-9": [
+    {
+      "text": "Let’s spread it evenly on the batter.",
+      "emu": {
+        "x": 7655624,
+        "y": -34657,
+        "cx": 1834324,
+        "cy": 1023257
+      },
+      "percent": {
+        "left": 62.79,
+        "top": -0.51,
+        "width": 15.05,
+        "height": 14.92
+      }
+    }
+  ],
+  "slide-10": [
+    {
+      "text": "Let’s add some drops of oil on the edges.",
+      "emu": {
+        "x": 7520036,
+        "y": -76788,
+        "cx": 2105500,
+        "cy": 1221376
+      },
+      "percent": {
+        "left": 61.68,
+        "top": -1.12,
+        "width": 17.27,
+        "height": 17.81
+      }
+    }
+  ],
+  "slide-11": [
+    {
+      "text": "It’s time to flip the dosa!",
+      "emu": {
+        "x": 7791212,
+        "y": 34247,
+        "cx": 2105500,
+        "cy": 1221376
+      },
+      "percent": {
+        "left": 63.9,
+        "top": 0.5,
+        "width": 17.27,
+        "height": 17.81
+      }
+    }
+  ],
+  "slide-12": [
+    {
+      "text": "Grab a plate before the dosa turns cold!",
+      "emu": {
+        "x": 7520155,
+        "y": 50771,
+        "cx": 2105500,
+        "cy": 1221376
+      },
+      "percent": {
+        "left": 61.68,
+        "top": 0.74,
+        "width": 17.27,
+        "height": 17.81
+      }
+    }
+  ],
+  "slide-13": [
+    {
+      "text": "Maa, the dosa is delicious!",
+      "emu": {
+        "x": 8142719,
+        "y": 230188,
+        "cx": 2105500,
+        "cy": 1221376
+      },
+      "percent": {
+        "left": 66.79,
+        "top": 3.36,
+        "width": 17.27,
+        "height": 17.81
+      }
+    }
+  ]
+}

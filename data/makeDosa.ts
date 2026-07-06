@@ -50,7 +50,7 @@ export const makeDosaData: GameScreen[] = [
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 3 : Story: Intro (Mom + Kid, empty tawa, two dialogues)
+  // SLIDE 3 : Cooking Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-3',
@@ -61,52 +61,60 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd3-mom',
         speaker: 'mom',
-        text: "Today we're going to make a masala dosa! Are you ready?",
-        position: { top: 4, left: 2 },
-        tailDirection: 'down'
+        text: "Today we’re going to make a masala dosa! Are you ready?",
+        position: { top: 4, left: 52.84 },
+        tailDirection: 'down-left'
       },
       {
         id: 'd3-kid',
         speaker: 'kid',
-        text: "Yes! I'm so hungry!",
-        position: { top: 4, left: 58 },
-        tailDirection: 'down'
+        text: "Yes! I’m so hungry!",
+        position: { top: 17.62, left: 71.07 },
+        tailDirection: 'down-left'
       }
-    ]
+    ],
+    bottomItems: [
+      { id: 'batter', image: IMG('image_002.png'), label: 'Dosa batter' },
+      { id: 'masala', image: IMG('image_003.png'), label: 'Potato filling' },
+      { id: 'oil', image: IMG('image_004.png'), label: 'Oil' },
+      { id: 'spatula', image: IMG('image_005.png'), label: 'Ladle' },
+      { id: 'plate', image: IMG('image_006.png'), label: 'Plate' }
+    ],
+    showBottomLabels: false
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 4 : Story-Items: Mom points to ingredients (STATIC display, no drag)
+  // SLIDE 4 : Ingredients Intro
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-4',
-    type: 'story-items',
+    type: 'story',
     slideNumber: 4,
     image: IMG('image_008.png'),
     dialogues: [
       {
         id: 'd4-mom',
         speaker: 'mom',
-        text: "First, let's put some dosa batter.",
-        position: { top: 4, left: 38 },
-        tailDirection: 'down'
+        text: "First, let’s put some dosa batter.",
+        position: { top: 2, left: 52.84 },
+        tailDirection: 'down-left'
       }
     ],
-    items: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') },
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') },
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') },
-      { id: 'ladle', label: 'Ladle', image: IMG('image_005.png') },
-      { id: 'plate', label: 'Plate', image: IMG('image_006.png') }
-    ]
+    // initialOverlays: [
+    //   { src: IMG('image_007.png'), top: 45.57, left: 36.8, width: 26.41, height: 25.56 }
+    // ],
+    bottomItems: [
+      { id: 'batter', image: IMG('image_007.png'), label: 'Dosa batter' },
+      { id: 'masala', image: IMG('image_003.png'), label: 'Potato filling' },
+      { id: 'oil', image: IMG('image_004.png'), label: 'Oil' },
+      { id: 'spatula', image: IMG('image_005.png'), label: 'Ladle' },
+      { id: 'plate', image: IMG('image_006.png'), label: 'Plate' }
+    ],
+    showBottomLabels: true
   },
 
   // ══════════════════════════════════════════════════════════════════════════
   // SLIDE 5 : DRAG #1: Pour batter on tawa
-  // Start: Empty tawa (image_009.png)
-  // Drag item: Dosa Batter
-  // Success overlay: image_022.png (full-screen background state showing batter poured)
-  // End background: image_022.png
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-5',
@@ -115,7 +123,7 @@ export const makeDosaData: GameScreen[] = [
     instruction: "Can you help me put the batter on the tawa?",
     backgroundImage: IMG('image_009.png'),
     options: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') }
+      { id: 'batter', label: '', image: IMG('image_010.png') }
     ],
     correctOptionId: 'batter',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
@@ -128,71 +136,81 @@ export const makeDosaData: GameScreen[] = [
         id: 'd5-mom',
         speaker: 'mom',
         text: "Can you help me put the batter on the tawa?",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        position: { top: 2, left: 64.64 },
+        tailDirection: 'down-left'
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 6 : Story: Spreading the batter
-  // Start: Dosa batter spread (image_023.png showing batter spread)
+  // SLIDE 6 : DRAG #1.5: Spread the batter
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-6',
-    type: 'story',
+    type: 'drag',
     slideNumber: 6,
-    image: IMG('image_023.png'),
-    initialOverlays: [],
+    instruction: "Let’s make it bigger.",
+    backgroundImage: IMG('image_022.png'),
+    options: [
+      { id: 'ladle', label: '', image: IMG('image_011.png') }
+    ],
+    correctOptionId: 'ladle',
+    targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
+    dropTargetPos: { top: 35, left: 5, width: 88, height: 55 },
+    successTransitionImage: IMG('image_023.png'),
+    nextBackgroundImage: IMG('image_023.png'),
+    nextOverlays: [],
     dialogues: [
       {
         id: 'd6-mom',
         speaker: 'mom',
-        text: "Let's make it bigger.",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        text: "Let’s make it bigger.",
+        position: { top: 2, left: 65.89 },
+        tailDirection: 'down-left'
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 7 : Story: Nicely spread
-  // Start: Nicely spread batter (image_024.png showing nicely spread state)
+  // SLIDE 7 : Nice Spread batter circle
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-7',
     type: 'story',
     slideNumber: 7,
     image: IMG('image_024.png'),
-    initialOverlays: [],
     dialogues: [
       {
         id: 'd7-mom',
         speaker: 'mom',
-        text: "Now it's nicely spread on the tawa.",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        text: "Now it’s nicely spread on the tawa.",
+        position: { top: 2, left: 63.91 },
+        tailDirection: 'down-left'
       }
-    ]
+    ],
+    // leftPanelImage: IMG('image_012.png'),
+    bottomItems: [
+      { id: 'batter', image: IMG('image_002.png'), label: 'Dosa batter' },
+      { id: 'masala', image: IMG('image_003.png'), label: 'Potato filling' },
+      { id: 'oil', image: IMG('image_004.png'), label: 'Oil' },
+      { id: 'spatula', image: IMG('image_005.png'), label: 'Ladle' },
+      { id: 'plate', image: IMG('image_006.png'), label: 'Plate' }
+    ],
+    showBottomLabels: false
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // ══════════════════════════════════════════════════════════════════════════
   // SLIDE 8 : DRAG #2: Add potato masala
-  // Start: Nicely spread batter (image_024.png)
-  // Drag item: Potato filling
-  // Success overlay: image_026.png (potato masala put on dosa)
-  // End background: image_026.png
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-8',
     type: 'drag',
     slideNumber: 8,
-    instruction: "Let's put some potato masala.",
+    instruction: "Let’s put some potato masala.",
     backgroundImage: IMG('image_024.png'),
     initialOverlays: [],
     options: [
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') }
+      { id: 'masala', label: '', image: IMG('image_013.png') }
     ],
     correctOptionId: 'masala',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
@@ -204,50 +222,54 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd8-mom',
         speaker: 'mom',
-        text: "Let's put some potato masala.",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        text: "Let’s put some potato masala.",
+        position: { top: 2, left: 62.78 },
+        tailDirection: 'down-left'
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 9 : Story: Spreading the masala
-  // Start: potato masala spread evenly (image_027.png)
+  // SLIDE 9 : DRAG #2.5: Spread the masala
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-9',
-    type: 'story',
+    type: 'drag',
     slideNumber: 9,
-    image: IMG('image_027.png'),
-    initialOverlays: [],
+    instruction: "Let’s spread it evenly on the batter.",
+    backgroundImage: IMG('image_026.png'),
+    options: [
+      { id: 'ladle', label: '', image: IMG('image_014.png') }
+    ],
+    correctOptionId: 'ladle',
+    targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
+    dropTargetPos: { top: 35, left: 5, width: 88, height: 55 },
+    successTransitionImage: IMG('image_027.png'),
+    nextBackgroundImage: IMG('image_027.png'),
+    nextOverlays: [],
     dialogues: [
       {
         id: 'd9-mom',
         speaker: 'mom',
-        text: "Let's spread it evenly on the batter.",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        text: "Let’s spread it evenly on the batter.",
+        position: { top: 2, left: 62.79 },
+        tailDirection: 'down-left'
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
   // SLIDE 10 : DRAG #3: Add drops of oil
-  // Start: Masala spread evenly (image_027.png)
-  // Drag item: Oil
-  // Success overlay: image_028.png (oil drops added on edges)
-  // End background: image_028.png
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-10',
     type: 'drag',
     slideNumber: 10,
-    instruction: "Let's add some drops of oil on the edges.",
+    instruction: "Let’s add some drops of oil on the edges.",
     backgroundImage: IMG('image_027.png'),
     initialOverlays: [],
     options: [
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') }
+      { id: 'oil', label: '', image: IMG('image_015.png') }
     ],
     correctOptionId: 'oil',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
@@ -259,31 +281,27 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd10-mom',
         speaker: 'mom',
-        text: "Let's add some drops of oil on the edges.",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        text: "Let’s add some drops of oil on the edges.",
+        position: { top: 2, left: 61.68 },
+        tailDirection: 'down-left'
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
   // SLIDE 11 : DRAG #4: Flip the dosa
-  // Start: Oil added (image_028.png)
-  // Drag item: Spatula (Ladle)
-  // Success overlay: image_030.png (folded dosa flipped/ready)
-  // End background: image_030.png
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-11',
     type: 'drag',
     slideNumber: 11,
-    instruction: "It's time to flip the dosa!",
+    instruction: "It’s time to flip the dosa!",
     backgroundImage: IMG('image_028.png'),
     initialOverlays: [],
     options: [
-      { id: 'ladle', label: 'Ladle', image: IMG('image_005.png') }
+      { id: 'spatula', label: '', image: IMG('image_016.png') }
     ],
-    correctOptionId: 'ladle',
+    correctOptionId: 'spatula',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
     dropTargetPos: { top: 35, left: 5, width: 88, height: 55 },
     successTransitionImage: IMG('image_030.png'),
@@ -293,19 +311,15 @@ export const makeDosaData: GameScreen[] = [
       {
         id: 'd11-mom',
         speaker: 'mom',
-        text: "It's time to flip the dosa!",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        text: "It’s time to flip the dosa!",
+        position: { top: 2, left: 63.9 },
+        tailDirection: 'down-left'
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
   // SLIDE 12 : DRAG #5: Serve on plate
-  // Start: Folded dosa ready (image_030.png)
-  // Drag item: Plate
-  // Success overlay: image_018.png (eating scene - full cover)
-  // End background: image_018.png
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-12',
@@ -315,7 +329,7 @@ export const makeDosaData: GameScreen[] = [
     backgroundImage: IMG('image_030.png'),
     initialOverlays: [],
     options: [
-      { id: 'plate', label: 'Plate', image: IMG('image_006.png') }
+      { id: 'plate', label: '', image: IMG('image_006.png') }
     ],
     correctOptionId: 'plate',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
@@ -328,35 +342,34 @@ export const makeDosaData: GameScreen[] = [
         id: 'd12-mom',
         speaker: 'mom',
         text: "Grab a plate before the dosa turns cold!",
-        position: { top: 4, left: 5 },
-        tailDirection: 'down'
+        position: { top: 2, left: 61.68 },
+        tailDirection: 'down-left',
+        showAfterSolve: false
+      },
+      {
+        id: 'd12-kid',
+        speaker: 'kid',
+        text: "Maa, the dosa is delicious!",
+        position: { top: 3.36, left: 66.79 },
+        tailDirection: 'down-right',
+        showAfterSolve: true
       }
     ]
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 13 : Story: Eating the dosa
-  // Start: Mom + Kid eating (image_018.png)
+  // SLIDE 13 : Activity Completion
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-13',
-    type: 'story',
+    type: 'completion',
     slideNumber: 13,
-    image: IMG('image_018.png'),
-    dialogues: [
-      {
-        id: 'd13-kid',
-        speaker: 'kid',
-        text: "Maa, the dosa is delicious!",
-        position: { top: 4, left: 52 },
-        tailDirection: 'down'
-      }
-    ]
+    title: 'Dosa Cooked! 🍽️',
+    subtitle: 'Yummy! You successfully cooked a delicious masala dosa with Mom.'
   },
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 14 : Section: Practice intro
-  // ══════════════════════════════════════════════════════════════════════════
+
+
   {
     id: 'slide-14',
     type: 'story',
@@ -372,10 +385,6 @@ export const makeDosaData: GameScreen[] = [
       }
     ]
   },
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // SLIDE 15 : Section Intro
-  // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-15',
     type: 'story',
@@ -391,83 +400,74 @@ export const makeDosaData: GameScreen[] = [
       }
     ]
   },
-
-  // ══════════════════════════════════════════════════════════════════════════
   // SLIDES 16–20 : Vocabulary Practice
+  // ══════════════════════════════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════════════════════════════
+  // SLIDES 16–20 : Receptive & Expressive Language Scene (Interactive Hotspots)
   // ══════════════════════════════════════════════════════════════════════════
   {
     id: 'slide-16',
-    type: 'vocabulary',
+    type: 'receptive-scene',
     slideNumber: 16,
+    backgroundImage: IMG('image_001.png'),
     instruction: 'Point to the pan',
-    correctOptionId: 'pan',
-    options: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') },
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') },
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') },
-      { id: 'ladle', label: 'Ladle', image: IMG('image_005.png') },
-      { id: 'pan', label: 'Pan / Tawa', image: IMG('image_019.png') },
-      { id: 'fridge', label: 'Fridge', image: IMG('image_021.png') }
+    correctHotspotId: 'tawa',
+    hotspots: [
+      { id: 'tawa', label: 'Tawa', x: 23, y: 56, width: 40, height: 18 },
+      { id: 'fridge', label: 'Refrigerator', x: 5, y: 7, width: 27, height: 52 },
+      { id: 'stove', label: 'Gas stove', x: 56, y: 35, width: 13, height: 9 }
     ]
   },
   {
     id: 'slide-17',
-    type: 'vocabulary',
+    type: 'receptive-scene',
     slideNumber: 17,
+    backgroundImage: IMG('image_001.png'),
     instruction: 'Point to the plate',
-    correctOptionId: 'plate',
-    options: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') },
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') },
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') },
-      { id: 'plate', label: 'Plate', image: IMG('image_006.png') },
-      { id: 'pan', label: 'Pan / Tawa', image: IMG('image_019.png') },
-      { id: 'fridge', label: 'Fridge', image: IMG('image_021.png') }
+    correctHotspotId: 'plate',
+    hotspots: [
+      { id: 'tawa', label: 'Tawa', x: 23, y: 56, width: 40, height: 18 },
+      { id: 'fridge', label: 'Refrigerator', x: 5, y: 7, width: 27, height: 52 },
+      { id: 'stove', label: 'Gas stove', x: 56, y: 35, width: 13, height: 9 }
     ]
   },
   {
     id: 'slide-18',
-    type: 'vocabulary',
+    type: 'receptive-scene',
     slideNumber: 18,
+    backgroundImage: IMG('image_001.png'),
     instruction: 'Point to the oil',
-    correctOptionId: 'oil',
-    options: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') },
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') },
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') },
-      { id: 'ladle', label: 'Ladle', image: IMG('image_005.png') },
-      { id: 'pan', label: 'Pan / Tawa', image: IMG('image_019.png') },
-      { id: 'fridge', label: 'Fridge', image: IMG('image_021.png') }
+    correctHotspotId: 'oil',
+    hotspots: [
+      { id: 'tawa', label: 'Tawa', x: 23, y: 56, width: 40, height: 18 },
+      { id: 'fridge', label: 'Refrigerator', x: 5, y: 7, width: 27, height: 52 },
+      { id: 'stove', label: 'Gas stove', x: 56, y: 35, width: 13, height: 9 }
     ]
   },
   {
     id: 'slide-19',
-    type: 'vocabulary',
+    type: 'receptive-scene',
     slideNumber: 19,
+    backgroundImage: IMG('image_001.png'),
     instruction: 'Point to the batter',
-    correctOptionId: 'batter',
-    options: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') },
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') },
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') },
-      { id: 'ladle', label: 'Ladle', image: IMG('image_005.png') },
-      { id: 'pan', label: 'Pan / Tawa', image: IMG('image_019.png') },
-      { id: 'fridge', label: 'Fridge', image: IMG('image_021.png') }
+    correctHotspotId: 'batter',
+    hotspots: [
+      { id: 'tawa', label: 'Tawa', x: 23, y: 56, width: 40, height: 18 },
+      { id: 'fridge', label: 'Refrigerator', x: 5, y: 7, width: 27, height: 52 },
+      { id: 'stove', label: 'Gas stove', x: 56, y: 35, width: 13, height: 9 }
     ]
   },
   {
     id: 'slide-20',
-    type: 'vocabulary',
+    type: 'receptive-scene',
     slideNumber: 20,
+    backgroundImage: IMG('image_001.png'),
     instruction: 'Point to the fridge',
-    correctOptionId: 'fridge',
-    options: [
-      { id: 'batter', label: 'Dosa batter', image: IMG('image_002.png') },
-      { id: 'masala', label: 'Potato filling', image: IMG('image_003.png') },
-      { id: 'oil', label: 'Oil', image: IMG('image_004.png') },
-      { id: 'ladle', label: 'Ladle', image: IMG('image_005.png') },
-      { id: 'pan', label: 'Pan / Tawa', image: IMG('image_019.png') },
-      { id: 'fridge', label: 'Fridge', image: IMG('image_021.png') }
+    correctHotspotId: 'fridge',
+    hotspots: [
+      { id: 'tawa', label: 'Tawa', x: 23, y: 56, width: 40, height: 18 },
+      { id: 'fridge', label: 'Refrigerator', x: 5, y: 7, width: 27, height: 52 },
+      { id: 'stove', label: 'Gas stove', x: 56, y: 35, width: 13, height: 9 }
     ]
   },
 
@@ -893,3 +893,30 @@ export const makeDosaData: GameScreen[] = [
     subtitle: 'Amazing job! You made a delicious masala dosa and completed all the language activities!'
   }
 ];
+
+const getSlidesByIds = (ids: string[]) => {
+  return ids.map(id => makeDosaData.find(s => s.id === id)).filter(Boolean) as GameScreen[];
+};
+
+export const gameModules: Record<string, GameScreen[]> = {
+  story: getSlidesByIds([
+    'slide-1', 'slide-3', 'slide-4', 'slide-5', 'slide-6', 'slide-7', 'slide-8', 'slide-9', 'slide-10', 'slide-11', 'slide-12', 'slide-13'
+  ]),
+  receptiveLanguage: getSlidesByIds([
+    'slide-15', 'slide-16', 'slide-17', 'slide-18', 'slide-19', 'slide-20'
+  ]),
+  objectFunction: getSlidesByIds([
+    'slide-21', 'slide-22', 'slide-23', 'slide-24', 'slide-25', 'slide-26'
+  ]),
+  sentenceBuilding: getSlidesByIds([
+    'slide-27', 'slide-28', 'slide-29', 'slide-30', 'slide-31', 'slide-32'
+  ]),
+  whQuestions: getSlidesByIds([
+    'slide-33', 'slide-34', 'slide-35', 'slide-36', 'slide-37', 'slide-38',
+    'slide-39', 'slide-40', 'slide-41', 'slide-42', 'slide-43'
+  ]),
+  sequencing: getSlidesByIds([
+    'slide-44', 'slide-45'
+  ])
+};
+

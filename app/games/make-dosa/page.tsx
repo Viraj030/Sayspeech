@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
+import { Trophy, RefreshCw } from 'lucide-react';
 
 // Import Screens & Components
 import GameLayout from '@/components/GameLayout';
@@ -10,29 +12,118 @@ import WelcomeScreen from '@/components/WelcomeScreen';
 import StoryScreen from '@/components/StoryScreen';
 import StoryItemsScreen from '@/components/StoryItemsScreen';
 import DragDropScreen from '@/components/DragDropScreen';
+import CompletionScreen from '@/components/CompletionScreen';
 import QuestionScreen from '@/components/QuestionScreen';
 import VocabularyScreen from '@/components/VocabularyScreen';
 import SentenceBuilder from '@/components/SentenceBuilder';
 import ObjectFunctionScreen from '@/components/ObjectFunctionScreen';
 import SequenceScreen from '@/components/SequenceScreen';
-import CompletionScreen from '@/components/CompletionScreen';
+import ChallengeHub from '@/components/ChallengeHub';
+import RewardPopup from '@/components/RewardPopup';
+import ReceptiveSceneScreen from '@/components/ReceptiveSceneScreen';
 
 // Import Data & types
-import { makeDosaData } from '@/data/makeDosa';
-import { DragScreenData } from '@/types/game';
+import { gameModules } from '@/data/makeDosa';
+import { DragScreenData, GameScreen } from '@/types/game';
 import { playSound } from '@/lib/sound';
 
 export default function MakeDosaGamePage() {
   const router = useRouter();
 
+  // Core navigation states
+  const [currentModule, setCurrentModule] = useState<
+    'story' | 'receptiveLanguage' | 'objectFunction' | 'sentenceBuilding' | 'whQuestions' | 'sequencing' | null
+  >('story');
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [resetCounter, setResetCounter] = useState(0);
+
+  // Completion states
+  const [completedModules, setCompletedModules] = useState<Record<string, boolean>>({
+    story: false,
+    receptiveLanguage: false,
+    objectFunction: false,
+    sentenceBuilding: false,
+    whQuestions: false,
+    sequencing: false
+  });
+
+  // Reward Modal states
+  const [showRewardPopup, setShowRewardPopup] = useState(false);
+  const [justCompletedModule, setJustCompletedModule] = useState<string | null>(null);
+
+  // Answer tracking states
   const [solvedSteps, setSolvedSteps] = useState<Record<string, boolean>>({});
   const [selectedQuizAnswers, setSelectedQuizAnswers] = useState<Record<string, string | null>>({});
   const [currentSubQuestionIndices, setCurrentSubQuestionIndices] = useState<Record<string, number>>({});
   const [selectedObjectFunctionTexts, setSelectedObjectFunctionTexts] = useState<Record<string, string | null>>({});
 
-  const totalSteps = makeDosaData.length;
-  const currentStep = makeDosaData[currentStepIndex];
+  // Check if all 6 challenges are completed
+  const isAllCompleted =
+    completedModules.story &&
+    completedModules.receptiveLanguage &&
+    completedModules.objectFunction &&
+    completedModules.sentenceBuilding &&
+    completedModules.whQuestions &&
+    completedModules.sequencing;
+
+  // Load progress from localStorage on mount (client-only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('sayspeech_dosa_progress');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed.completedModules) setCompletedModules(parsed.completedModules);
+          if (parsed.currentModule !== undefined) setCurrentModule(parsed.currentModule);
+        } catch (e) {
+          console.error('[Progress Engine] Failed to parse progress:', e);
+        }
+      }
+    }
+  }, []);
+
+  // Save progress helper
+  const saveProgress = (newCompleted: any, newModule: any) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(
+        'sayspeech_dosa_progress',
+        JSON.stringify({
+          completedModules: newCompleted,
+          currentModule: newModule
+        })
+      );
+    }
+  };
+
+  // Trigger confetti continuously on final celebration mount
+  useEffect(() => {
+    if (currentModule === null && isAllCompleted) {
+      playSound('correct');
+      const duration = 4 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 25, spread: 360, ticks: 50, zIndex: 10000 };
+
+      const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti({ ...defaults, particleCount, origin: { x: 0.5, y: 0.5 } });
+      }, 250);
+
+      return () => clearInterval(interval);
+    }
+  }, [currentModule, isAllCompleted]);
+
+  // Current active slide array
+  const currentModuleSlides = currentModule ? gameModules[currentModule] || [] : [];
+  const totalSteps = currentModuleSlides.length;
+  const currentStep = currentModule ? currentModuleSlides[currentStepIndex] : null;
 
   const handleSolveStep = (stepId: string) => {
     setSolvedSteps((prev) => ({ ...prev, [stepId]: true }));
@@ -47,45 +138,152 @@ export default function MakeDosaGamePage() {
   const handleNext = () => {
     if (!isCurrentStepSolved()) return;
     playSound('click');
+
     if (currentStepIndex < totalSteps - 1) {
       setCurrentStepIndex((prev) => prev + 1);
+    } else {
+      // End of the active module
+      if (currentModule) {
+        const completedKey = currentModule;
+        setJustCompletedModule(completedKey);
+        const nextCompleted = { ...completedModules, [completedKey]: true };
+        setCompletedModules(nextCompleted);
+        saveProgress(nextCompleted, null);
+        setShowRewardPopup(true);
+      }
     }
   };
 
   const handlePrev = () => {
     if (currentStepIndex > 0) {
       playSound('click');
+      const targetStep = currentModuleSlides[currentStepIndex - 1];
+      if (targetStep) {
+        setSolvedSteps((prev) => {
+          const next = { ...prev };
+          delete next[targetStep.id];
+          return next;
+        });
+        setSelectedQuizAnswers((prev) => ({ ...prev, [targetStep.id]: null }));
+        setCurrentSubQuestionIndices((prev) => ({ ...prev, [targetStep.id]: 0 }));
+        setSelectedObjectFunctionTexts((prev) => ({ ...prev, [targetStep.id]: null }));
+      }
       setCurrentStepIndex((prev) => prev - 1);
+      setResetCounter((prev) => prev + 1);
     }
+  };
+
+  const handleClaimReward = () => {
+    setShowRewardPopup(false);
+    setJustCompletedModule(null);
+    setCurrentModule(null);
+    setCurrentStepIndex(0);
   };
 
   const handleRestart = () => {
     playSound('click');
+    const resetCompleted = {
+      story: false,
+      receptiveLanguage: false,
+      objectFunction: false,
+      sentenceBuilding: false,
+      whQuestions: false,
+      sequencing: false
+    };
+    setCompletedModules(resetCompleted);
+    setCurrentModule('story');
     setCurrentStepIndex(0);
     setSolvedSteps({});
     setSelectedQuizAnswers({});
     setCurrentSubQuestionIndices({});
     setSelectedObjectFunctionTexts({});
+    setResetCounter(0);
+    saveProgress(resetCompleted, 'story');
+  };
+
+  const handleResetCurrentStep = () => {
+    if (!currentStep) return;
+    playSound('click');
+    setSolvedSteps((prev) => {
+      const next = { ...prev };
+      delete next[currentStep.id];
+      return next;
+    });
+    setSelectedQuizAnswers((prev) => ({ ...prev, [currentStep.id]: null }));
+    setCurrentSubQuestionIndices((prev) => ({ ...prev, [currentStep.id]: 0 }));
+    setSelectedObjectFunctionTexts((prev) => ({ ...prev, [currentStep.id]: null }));
+    setResetCounter((prev) => prev + 1);
+  };
+
+  const handleRestartCurrentModule = () => {
+    playSound('click');
+    setCurrentStepIndex(0);
+    setSolvedSteps((prev) => {
+      const next = { ...prev };
+      currentModuleSlides.forEach((s) => {
+        delete next[s.id];
+      });
+      return next;
+    });
+    currentModuleSlides.forEach((s) => {
+      setSelectedQuizAnswers((prev) => ({ ...prev, [s.id]: null }));
+      setCurrentSubQuestionIndices((prev) => ({ ...prev, [s.id]: 0 }));
+      setSelectedObjectFunctionTexts((prev) => ({ ...prev, [s.id]: null }));
+    });
+    setResetCounter((prev) => prev + 1);
   };
 
   const handleHome = () => {
-    handleRestart();
+    playSound('click');
+    if (currentModule !== 'story' && currentModule !== null) {
+      // Return to Selection Hub if backing out of a mini-game
+      setCurrentModule(null);
+      setCurrentStepIndex(0);
+      saveProgress(completedModules, null);
+    } else {
+      // Exit to main dashboard of the site
+      router.push('/');
+    }
   };
 
-  // Auto-solve welcome and completion
+  const selectModuleFromHub = (moduleKey: string) => {
+    playSound('click');
+    
+    // Reset solved state for all slides in this module if already played/completed
+    if (completedModules[moduleKey]) {
+      const slides = gameModules[moduleKey] || [];
+      setSolvedSteps((prev) => {
+        const next = { ...prev };
+        slides.forEach((s) => {
+          delete next[s.id];
+        });
+        return next;
+      });
+      slides.forEach((s) => {
+        setSelectedQuizAnswers((prev) => ({ ...prev, [s.id]: null }));
+        setCurrentSubQuestionIndices((prev) => ({ ...prev, [s.id]: 0 }));
+        setSelectedObjectFunctionTexts((prev) => ({ ...prev, [s.id]: null }));
+      });
+    }
+
+    // Set active module
+    setCurrentModule(moduleKey as any);
+    setCurrentStepIndex(0);
+    saveProgress(completedModules, moduleKey);
+  };
+
+  // Auto-solve welcome slide
   useEffect(() => {
-    if (currentStep && (currentStep.type === 'welcome' || currentStep.type === 'completion')) {
+    if (currentStep && currentStep.type === 'welcome') {
       handleSolveStep(currentStep.id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStepIndex]);
+  }, [currentStepIndex, currentModule, currentStep]);
 
   const renderScreenContent = () => {
     if (!currentStep) return null;
     const isSolved = isCurrentStepSolved();
 
     switch (currentStep.type) {
-      // ── Welcome ──────────────────────────────────────────────────────────
       case 'welcome':
         return (
           <WelcomeScreen
@@ -95,24 +293,24 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Story (narrative only) ────────────────────────────────────────────
       case 'story':
         return (
           <StoryScreen
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             image={currentStep.image}
             dialogues={currentStep.dialogues}
             initialOverlays={currentStep.initialOverlays ?? []}
             onDialogueComplete={() => handleSolveStep(currentStep.id)}
             leftPanelImage={currentStep.leftPanelImage}
+            bottomItems={(currentStep as any).bottomItems}
+            showBottomLabels={(currentStep as any).showBottomLabels}
           />
         );
 
-      // ── Story-Items (story + static ingredient display) ───────────────────
       case 'story-items':
         return (
           <StoryItemsScreen
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             image={currentStep.image}
             dialogues={currentStep.dialogues}
             items={currentStep.items}
@@ -120,12 +318,11 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Drag & Drop ───────────────────────────────────────────────────────
       case 'drag': {
         const dragStep = currentStep as DragScreenData;
         return (
           <DragDropScreen
-            key={dragStep.id}
+            key={`${dragStep.id}-${resetCounter}`}
             instruction={dragStep.instruction}
             backgroundImage={dragStep.backgroundImage}
             options={dragStep.options}
@@ -142,11 +339,10 @@ export default function MakeDosaGamePage() {
         );
       }
 
-      // ── Quiz ──────────────────────────────────────────────────────────────
       case 'quiz':
         return (
           <QuestionScreen
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             question={currentStep.question}
             options={currentStep.options}
             onSolved={() => handleSolveStep(currentStep.id)}
@@ -158,11 +354,10 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Vocabulary ────────────────────────────────────────────────────────
       case 'vocabulary':
         return (
           <VocabularyScreen
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             instruction={currentStep.instruction}
             options={currentStep.options}
             correctOptionId={currentStep.correctOptionId}
@@ -171,11 +366,10 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Sentence Building ─────────────────────────────────────────────────
       case 'sentence':
         return (
           <SentenceBuilder
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             instruction={currentStep.instruction}
             words={currentStep.words}
             correctOrder={currentStep.correctOrder}
@@ -184,11 +378,10 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Object Function ───────────────────────────────────────────────────
       case 'object-function':
         return (
           <ObjectFunctionScreen
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             image={currentStep.image}
             objectName={currentStep.objectName}
             questions={currentStep.questions}
@@ -205,11 +398,10 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Sequencing ────────────────────────────────────────────────────────
       case 'sequence':
         return (
           <SequenceScreen
-            key={currentStep.id}
+            key={`${currentStep.id}-${resetCounter}`}
             instruction={currentStep.instruction}
             items={currentStep.items}
             onSolved={() => handleSolveStep(currentStep.id)}
@@ -217,13 +409,39 @@ export default function MakeDosaGamePage() {
           />
         );
 
-      // ── Completion ────────────────────────────────────────────────────────
+      case 'receptive-scene':
+        return (
+          <ReceptiveSceneScreen
+            key={`${currentStep.id}-${resetCounter}`}
+            backgroundImage={currentStep.backgroundImage}
+            instruction={currentStep.instruction}
+            correctHotspotId={currentStep.correctHotspotId}
+            hotspots={currentStep.hotspots}
+            onSolved={() => {
+              handleSolveStep(currentStep.id);
+              if (currentStepIndex < totalSteps - 1) {
+                setCurrentStepIndex((prev) => prev + 1);
+              } else {
+                // Complete module
+                const completedKey = currentModule!;
+                setJustCompletedModule(completedKey);
+                const nextCompleted = { ...completedModules, [completedKey]: true };
+                setCompletedModules(nextCompleted);
+                saveProgress(nextCompleted, null);
+                setShowRewardPopup(true);
+              }
+            }}
+            isSolved={isSolved}
+          />
+        );
+
       case 'completion':
         return (
           <CompletionScreen
+            key={`${currentStep.id}-${resetCounter}`}
             title={currentStep.title}
             subtitle={currentStep.subtitle}
-            onRestart={handleRestart}
+            onRestart={handleRestartCurrentModule}
           />
         );
 
@@ -236,32 +454,175 @@ export default function MakeDosaGamePage() {
     }
   };
 
-  if (!currentStep) return null;
+  // Determine Title for Layout
+  let activityName = 'Make A Dosa';
+  if (currentModule === 'story') {
+    activityName = 'Cooking Story';
+  } else if (currentModule === 'receptiveLanguage') {
+    activityName = 'Receptive Language';
+  } else if (currentModule === 'objectFunction') {
+    activityName = 'Object Function';
+  } else if (currentModule === 'sentenceBuilding') {
+    activityName = 'Sentence Building';
+  } else if (currentModule === 'whQuestions') {
+    activityName = 'WH Questions';
+  } else if (currentModule === 'sequencing') {
+    activityName = 'Sequencing';
+  } else if (currentModule === null) {
+    activityName = isAllCompleted ? 'Dosa Master Chef! 🏆' : 'Choose Your Challenge 🎮';
+  }
 
-  return (
-    <GameLayout
-      currentStepIndex={currentStepIndex}
-      totalSteps={totalSteps}
-      activityName="Make A Dosa"
-      onNext={handleNext}
-      onPrev={handlePrev}
-      disableNext={!isCurrentStepSolved()}
-      disablePrev={currentStepIndex === 0}
-      onHome={handleHome}
-      isWide={currentStepIndex === 0}
-    >
-      <AnimatePresence mode="wait">
+  // ── FINAL CELEBRATION SCREEN RENDERING ──
+  if (currentModule === null && isAllCompleted) {
+    return (
+      <GameLayout
+        currentStepIndex={0}
+        totalSteps={0}
+        activityName={activityName}
+        onNext={() => { }}
+        onPrev={() => { }}
+        disableNext={true}
+        disablePrev={true}
+        onHome={handleHome}
+        isWide={true}
+        hideFooter={true}
+      >
         <motion.div
-          key={currentStep.id}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="flex-1 flex flex-col w-full h-full"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex-grow flex flex-col items-center justify-center text-center p-6 gap-5 max-w-lg mx-auto overflow-y-auto h-full select-none"
         >
-          {renderScreenContent()}
+          {/* Large Bouncing Gold Trophy */}
+          <motion.div
+            initial={{ rotate: -15, scale: 0.8 }}
+            animate={{ rotate: 0, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 10, delay: 0.2 }}
+            className="w-20 h-20 sm:w-28 sm:h-28 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-full flex items-center justify-center border-4 border-amber-300 shadow-xl text-amber-500 shrink-0 relative"
+          >
+            <Trophy className="w-10 h-10 sm:w-14 sm:h-14 animate-bounce" />
+            <motion.div
+              animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.1, 0.9] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -right-3 -top-3 text-2xl select-none"
+            >
+              ✨
+            </motion.div>
+          </motion.div>
+
+          {/* Congrats Info */}
+          <div className="flex flex-col gap-2 shrink-0">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-800 tracking-tight leading-none uppercase drop-shadow-sm">
+              Ultimate Dosa Chef! 🍽️
+            </h2>
+            <p className="text-xs sm:text-sm font-bold text-slate-700 max-w-sm mx-auto leading-relaxed">
+              Incredible work! You cooked a yummy masala dosa with mom and aced all 5 learning challenges!
+            </p>
+          </div>
+
+          {/* ── CHALLENGES COMPLETED PANEL ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="w-full bg-emerald-50 border-2 border-emerald-200 p-4 rounded-3xl shadow-md flex flex-col items-center gap-2 max-w-sm shrink-0"
+          >
+            <span className="text-3xl select-none">🏆</span>
+            <span className="text-base font-black text-emerald-700">All 6 Challenges Completed!</span>
+            <span className="text-xs font-bold text-slate-500">You're a Dosa Master Chef!</span>
+          </motion.div>
+
+          {/* Restart Button */}
+          <motion.button
+            onClick={handleRestart}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black rounded-2xl text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer shrink-0 uppercase border-2 border-white"
+          >
+            <RefreshCw className="w-4 h-4 stroke-[3px]" />
+            <span>Play Again</span>
+          </motion.button>
         </motion.div>
+      </GameLayout>
+    );
+  }
+
+  // ── HUB SCREEN RENDERING ──
+  if (currentModule === null) {
+    return (
+      <GameLayout
+        currentStepIndex={0}
+        totalSteps={0}
+        activityName={activityName}
+        onNext={() => { }}
+        onPrev={() => { }}
+        disableNext={true}
+        disablePrev={true}
+        onHome={handleHome}
+        isWide={true}
+        hideFooter={true}
+      >
+        <ChallengeHub
+          completedModules={completedModules}
+          onSelectModule={selectModuleFromHub}
+        />
+      </GameLayout>
+    );
+  }
+
+  // ── CORE GAMEPLAY RENDER ──
+  return (
+    <>
+      <GameLayout
+        currentStepIndex={currentStepIndex}
+        totalSteps={totalSteps}
+        activityName={activityName}
+        onNext={handleNext}
+        onPrev={handlePrev}
+        disableNext={!isCurrentStepSolved()}
+        disablePrev={currentStepIndex === 0}
+        onHome={handleHome}
+        isWide={currentStepIndex === 0}
+        hideFooter={false}
+        onReset={currentStepIndex === totalSteps - 1 ? handleRestartCurrentModule : handleResetCurrentStep}
+        resetLabel={currentStepIndex === totalSteps - 1 ? 'Reset' : 'Redo'}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${currentModule}-${currentStep?.id || 'none'}-${resetCounter}`}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="flex-1 flex flex-col w-full h-full"
+          >
+            {renderScreenContent()}
+          </motion.div>
+        </AnimatePresence>
+      </GameLayout>
+
+      {/* Celebration & Reward Popup overlay */}
+      <AnimatePresence>
+        {showRewardPopup && justCompletedModule && (
+          <RewardPopup
+            activityName={
+              justCompletedModule === 'story'
+                ? 'Cooking Story'
+                : justCompletedModule === 'receptiveLanguage'
+                  ? 'Receptive Language'
+                  : justCompletedModule === 'objectFunction'
+                    ? 'Object Function'
+                    : justCompletedModule === 'sentenceBuilding'
+                      ? 'Sentence Building'
+                      : justCompletedModule === 'whQuestions'
+                        ? 'WH Questions'
+                        : justCompletedModule === 'sequencing'
+                          ? 'Sequencing'
+                          : ''
+            }
+            onClaim={handleClaimReward}
+          />
+        )}
       </AnimatePresence>
-    </GameLayout>
+    </>
   );
 }

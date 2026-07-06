@@ -8,7 +8,8 @@ export type ScreenType =
   | 'sentence'
   | 'object-function'
   | 'sequence'
-  | 'completion';
+  | 'completion'
+  | 'receptive-scene';
 
 export interface BaseScreen {
   id: string;
@@ -31,6 +32,7 @@ export interface DialogueBubble {
     left: number;
   };
   tailDirection: 'left' | 'right' | 'up' | 'down' | 'down-left' | 'down-right' | 'up-left' | 'up-right';
+  showAfterSolve?: boolean;
 }
 
 // ── Story screen (narrative, no interaction) ──────────────────────────────────
@@ -48,7 +50,10 @@ export interface StoryScreenData extends BaseScreen {
   dialogues?: DialogueBubble[];
   leftPanelImage?: string;
   initialOverlays?: OverlayImage[];
+  bottomItems?: { id: string; image: string; label: string }[];
+  showBottomLabels?: boolean;
 }
+
 
 // ── Story-Items screen (story + static ingredient labels at bottom) ────────────
 export interface StoryItem {
@@ -160,6 +165,23 @@ export interface CompletionScreenData extends BaseScreen {
   subtitle: string;
 }
 
+export interface Hotspot {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface ReceptiveSceneScreenData extends BaseScreen {
+  type: 'receptive-scene';
+  backgroundImage: string;
+  instruction: string;
+  correctHotspotId: string;
+  hotspots: Hotspot[];
+}
+
 export type GameScreen =
   | WelcomeScreen
   | StoryScreenData
@@ -170,4 +192,5 @@ export type GameScreen =
   | SentenceScreenData
   | ObjectFunctionScreenData
   | SequenceScreenData
-  | CompletionScreenData;
+  | CompletionScreenData
+  | ReceptiveSceneScreenData;
