@@ -336,7 +336,7 @@ export default function ReceptiveSceneScreen({
                   : '#1e1b4b',
               fontSize: (bubbleText.includes('Great Job') || bubbleText.includes('Oops'))
                 ? '2.4cqw'
-                : '2.9cqw',
+                : '3cqw',
             }}
           >
             {bubbleText}

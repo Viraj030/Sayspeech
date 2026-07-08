@@ -223,8 +223,8 @@ export const makeDosaData: GameScreen[] = [
     correctOptionId: 'masala',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
     dropTargetPos: { top: 35, left: 5, width: 88, height: 55 },
-    successTransitionImage: IMG('image_026.png'),
-    nextBackgroundImage: IMG('image_026.png'),
+    successTransitionImage: IMG('image_031.jpg'),
+    nextBackgroundImage: IMG('image_031.jpg'),
     nextOverlays: [],
     dialogues: [
       {
@@ -245,15 +245,15 @@ export const makeDosaData: GameScreen[] = [
     type: 'drag',
     slideNumber: 9,
     instruction: "Let’s spread it evenly on the batter.",
-    backgroundImage: IMG('image_026.png'),
+    backgroundImage: IMG('image_031.jpg'),
     options: [
       { id: 'ladle', label: '', image: IMG('image_014.png') }
     ],
     correctOptionId: 'ladle',
     targetArea: { id: 'tawa', label: 'Tawa', image: IMG('image_019.png') },
     dropTargetPos: { top: 35, left: 5, width: 88, height: 55 },
-    successTransitionImage: IMG('image_027.png'),
-    nextBackgroundImage: IMG('image_027.png'),
+    successTransitionImage: IMG('image_032.jpg'),
+    nextBackgroundImage: IMG('image_032.jpg'),
     nextOverlays: [],
     dialogues: [
       {
@@ -274,7 +274,7 @@ export const makeDosaData: GameScreen[] = [
     type: 'drag',
     slideNumber: 10,
     instruction: "Let’s add some drops of oil on the edges.",
-    backgroundImage: IMG('image_027.png'),
+    backgroundImage: IMG('image_032.jpg'),
     initialOverlays: [],
     options: [
       { id: 'oil', label: '', image: IMG('image_015.png') }
