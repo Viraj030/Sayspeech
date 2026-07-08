@@ -335,7 +335,7 @@ export default function DragDropScreen({
                     alt=""
                     className="absolute pointer-events-none"
                     style={
-                      /image_018|image_022|image_023|image_024|image_025|image_026|image_027|image_028|image_030/.test(successTransitionImage)
+                      /image_018|image_022|image_023|image_024|image_025|image_026|image_027|image_028|image_030|image_031|image_032/.test(successTransitionImage)
                         ? {
                           top: 0,
                           left: 0,

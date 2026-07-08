@@ -50,7 +50,7 @@ export default function GameLayout({
     <div style={{ backgroundColor: '#fdfae6' }} className="h-screen w-screen flex items-center justify-center p-2 sm:p-4 overflow-hidden select-none font-sans antialiased">
       {/* Immersive Green tablet frame filling viewport exactly */}
       <div
-        className={`w-full ${isWide ? 'max-w-4xl' : 'max-w-4xl'} h-full rounded-[24px] sm:rounded-[32px] flex flex-col shadow-2xl relative overflow-hidden transition-all duration-300`}
+        className={`w-full ${isWide ? 'max-w-3xl' : 'max-w-3xl'} h-full rounded-[24px] sm:rounded-[32px] flex flex-col shadow-2xl relative overflow-hidden transition-all duration-300`}
         style={{
           backgroundColor: '#66bb6a',
           border: '8px solid #4caf50',
