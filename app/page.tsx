@@ -567,15 +567,20 @@ export default function Home() {
       <GameLayout
         currentStepIndex={0}
         totalSteps={0}
-        activityName="Make A Dosa"
-        onNext={() => { }}
+        activityName="Say Speech"
+        onNext={() => {
+          playSound('click');
+          setCurrentModule('hub');
+          saveProgress(completedModules, 'hub');
+        }}
         onPrev={() => { }}
-        disableNext={true}
+        disableNext={false}
         disablePrev={true}
         onHome={handleHome}
         isWide={true}
-        hideHeader={true}
-        hideFooter={true}
+        hideHeader={false}
+        hideFooter={false}
+        hideHome={true}
       >
         <WelcomeScreen
           title="Make a Dosa"

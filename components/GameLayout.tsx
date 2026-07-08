@@ -50,7 +50,7 @@ export default function GameLayout({
     <div style={{ backgroundColor: '#fdfae6' }} className="h-screen w-screen flex items-center justify-center p-2 sm:p-4 overflow-hidden select-none font-sans antialiased">
       {/* Immersive Green tablet frame filling viewport exactly */}
       <div
-        className={`w-full ${isWide ? 'max-w-3xl' : 'max-w-3xl'} h-full rounded-[24px] sm:rounded-[32px] flex flex-col shadow-2xl relative overflow-hidden transition-all duration-300`}
+        className={`w-full ${isWide ? 'max-w-4xl' : 'max-w-4xl'} h-full rounded-[24px] sm:rounded-[32px] flex flex-col shadow-2xl relative overflow-hidden transition-all duration-300`}
         style={{
           backgroundColor: '#66bb6a',
           border: '8px solid #4caf50',
@@ -85,14 +85,20 @@ export default function GameLayout({
             {/* Activity Title (uppercase bold white with yellow rays and curve underline) */}
             <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none select-none z-0">
               <div className="flex items-center gap-1.5 sm:gap-2.5">
-                <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
-                <h1 className="text-sm sm:text-2xl font-black text-white tracking-widest font-display drop-shadow-md uppercase text-center truncate">
+                {activityName !== 'Say Speech' && (
+                  <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+                )}
+                <h1 className={`text-sm sm:text-2xl font-black text-white font-display drop-shadow-md text-center truncate ${activityName === 'Say Speech' ? 'tracking-normal' : 'tracking-widest uppercase'}`}>
                   {activityName}
                 </h1>
-                <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+                {activityName !== 'Say Speech' && (
+                  <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+                )}
               </div>
               {/* Small yellow underline curve */}
-              <div className="w-[45%] h-1 sm:h-1.5 bg-[#fef08a] rounded-full mt-0.5" />
+              {activityName !== 'Say Speech' && (
+                <div className="w-[45%] h-1 sm:h-1.5 bg-[#fef08a] rounded-full mt-0.5" />
+              )}
             </div>
 
             {/* RESET Button */}
