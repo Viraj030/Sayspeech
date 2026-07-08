@@ -129,26 +129,6 @@ export default function Home() {
     };
   }, []);
 
-  // Autoplay for the Cooking Story activity (advances after 3 seconds)
-  useEffect(() => {
-    if (currentModule === 'story') {
-      if (autoAdvanceTimeoutRef.current) clearTimeout(autoAdvanceTimeoutRef.current);
-
-      autoAdvanceTimeoutRef.current = setTimeout(() => {
-        // Auto solve it in state first (so progress is registered)
-        const activeSlide = gameModules.story[currentStepIndex];
-        if (activeSlide) {
-          setSolvedSteps((prev) => ({ ...prev, [activeSlide.id]: true }));
-        }
-        handleNext();
-      }, 3000);
-    }
-
-    return () => {
-      if (autoAdvanceTimeoutRef.current) clearTimeout(autoAdvanceTimeoutRef.current);
-    };
-  }, [currentStepIndex, currentModule]);
-
   // Current active slide array
   const isGameplay = currentModule && currentModule !== 'welcome' && currentModule !== 'hub';
   const currentModuleSlides = isGameplay ? gameModules[currentModule] || [] : [];
@@ -179,7 +159,6 @@ export default function Home() {
   const isCurrentStepSolved = () => {
     if (!currentStep) return false;
     if (currentStep.type === 'welcome' || currentStep.type === 'completion') return true;
-    if (currentModule === 'story') return true; // Always skippable / immediately solved in story mode
     return !!solvedSteps[currentStep.id];
   };
 

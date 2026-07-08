@@ -104,8 +104,11 @@ export const makeDosaData: GameScreen[] = [
     //   { src: IMG('image_007.png'), top: 45.57, left: 36.8, width: 26.41, height: 25.56 }
     // ],
     bottomItems: [
+      { id: 'batter', image: IMG('image_007.png'), label: 'Dosa batter' },
+      { id: 'masala', image: IMG('image_003.png'), label: 'Potato filling' },
       { id: 'oil', image: IMG('image_004.png'), label: 'Oil' },
-      { id: 'batter', image: IMG('image_007.png'), label: 'Dosa batter' }
+      { id: 'spatula', image: IMG('image_005.png'), label: 'Ladle' },
+      { id: 'plate', image: IMG('image_006.png'), label: 'Plate' }
     ],
     showBottomLabels: true
   },
