@@ -61,7 +61,7 @@ function DraggableSequenceCard({ item, isSolved }: { item: SequenceItem; isSolve
       </div>
 
       {/* Step Label */}
-      <span className="text-[8px] sm:text-[10px] font-black text-slate-700 text-center leading-tight mt-1 flex-grow flex items-center justify-center truncate w-full">
+      <span className="text-[10px] sm:text-[16px] text-wrap font-black text-slate-700 text-center leading-tight mt-1 flex-grow flex items-center justify-center truncate w-full">
         {item.label}
       </span>
     </div>
@@ -86,10 +86,10 @@ function DroppablePlaceholder({
     <div
       ref={setNodeRef}
       className={`relative w-24 h-32 sm:w-34 sm:h-44 rounded-xl border-2 border-dashed flex flex-col items-center justify-center transition-all ${placedItem
-          ? 'border-solid border-slate-800 bg-white shadow-sm'
-          : isOver
-            ? 'border-indigo-500 bg-indigo-50/20 scale-[1.02]'
-            : 'border-slate-300 bg-slate-50 hover:bg-slate-50'
+        ? 'border-solid border-slate-800 bg-white shadow-sm'
+        : isOver
+          ? 'border-indigo-500 bg-indigo-50/20 scale-[1.02]'
+          : 'border-slate-300 bg-slate-50 hover:bg-slate-50'
         } ${isSolved ? 'border-emerald-500 bg-emerald-50/10' : ''}`}
     >
       {placedItem ? (
@@ -140,7 +140,7 @@ export default function SequenceScreen({
   useEffect(() => {
     const sortedCopy = [...items];
     let jumbled = [...sortedCopy].sort(() => Math.random() - 0.5);
-    
+
     // Ensure it's not sorted correctly by chance
     let isSorted = jumbled.every((item, idx) => item.order === idx);
     while (isSorted && jumbled.length > 1) {
@@ -264,7 +264,7 @@ export default function SequenceScreen({
     if (isSolved) return;
     const sortedCopy = [...items];
     let jumbled = [...sortedCopy].sort(() => Math.random() - 0.5);
-    
+
     // Ensure it's not sorted correctly by chance
     let isSorted = jumbled.every((item, idx) => item.order === idx);
     while (isSorted && jumbled.length > 1) {
@@ -387,7 +387,7 @@ export default function SequenceScreen({
                   draggable={false}
                 />
               </div>
-              <span className="text-[8px] sm:text-[10px] font-black text-slate-700 text-center leading-tight mt-1 flex-grow flex items-center justify-center truncate w-full">
+              <span className="text-[10px] sm:text-[12px] font-black text-slate-700 text-center leading-tight mt-1 flex-grow flex items-center justify-center truncate w-full">
                 {items.find((item) => item.id === activeId)?.label}
               </span>
             </div>

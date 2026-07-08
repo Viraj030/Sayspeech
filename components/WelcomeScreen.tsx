@@ -8,7 +8,7 @@ interface WelcomeScreenProps {
   onStart: () => void;
 }
 
-export default function WelcomeScreen({}: WelcomeScreenProps) {
+export default function WelcomeScreen({ }: WelcomeScreenProps) {
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-hidden select-none">
       {/* Full screen cover background image */}

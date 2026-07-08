@@ -507,6 +507,7 @@ export const makeDosaData: GameScreen[] = [
     slideNumber: 22,
     image: IMG('image_019.png'),
     objectName: 'Pan / Tawa',
+    customImageHeight: 'h-28 sm:h-38 md:h-48',
     questions: [
       {
         questionText: 'What is it?',
@@ -530,8 +531,10 @@ export const makeDosaData: GameScreen[] = [
     id: 'slide-23',
     type: 'object-function',
     slideNumber: 23,
-    image: IMG('image_005.png'),
+    image: IMG('ladel.png'),
     objectName: 'Ladle',
+    customImageHeight: 'h-28 sm:h-38 md:h-48',
+    imageClassName: 'rotate-90 scale-130',
     questions: [
       {
         questionText: 'What is it?',
@@ -557,6 +560,7 @@ export const makeDosaData: GameScreen[] = [
     slideNumber: 24,
     image: IMG('image_006.png'),
     objectName: 'Plate',
+    customImageHeight: 'h-28 sm:h-38 md:h-48',
     questions: [
       {
         questionText: 'What is it?',
@@ -582,6 +586,7 @@ export const makeDosaData: GameScreen[] = [
     slideNumber: 25,
     image: IMG('image_020.png'),
     objectName: 'Gas Stove',
+    customImageHeight: 'h-36 sm:h-48 md:h-50',
     questions: [
       {
         questionText: 'What is it?',
@@ -607,6 +612,7 @@ export const makeDosaData: GameScreen[] = [
     slideNumber: 26,
     image: IMG('image_021.png'),
     objectName: 'Refrigerator',
+    customImageHeight: 'h-28 sm:h-40 md:h-44',
     questions: [
       {
         questionText: 'What is it?',

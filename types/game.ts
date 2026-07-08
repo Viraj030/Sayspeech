@@ -144,6 +144,8 @@ export interface ObjectFunctionScreenData extends BaseScreen {
   image: string;
   objectName: string;
   questions: ObjectFunctionQuestion[];
+  customImageHeight?: string;
+  imageClassName?: string;
 }
 
 export interface SequenceItem {

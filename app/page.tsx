@@ -484,6 +484,8 @@ export default function Home() {
             setSelectedOptionText={(txt) =>
               setSelectedObjectFunctionTexts((prev) => ({ ...prev, [currentStep.id]: txt }))
             }
+            customImageHeight={(currentStep as any).customImageHeight}
+            imageClassName={(currentStep as any).imageClassName}
           />
         );
 
