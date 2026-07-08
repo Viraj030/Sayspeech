@@ -243,7 +243,7 @@ export default function Home() {
     if (autoAdvanceTimeoutRef.current) clearTimeout(autoAdvanceTimeoutRef.current);
     setShowRewardPopup(false);
     setJustCompletedModule(null);
-    
+
     // Reset solved state for all slides in this module to allow fresh play
     if (currentModule) {
       const slides = gameModules[currentModule] || [];
@@ -338,7 +338,7 @@ export default function Home() {
   const selectModuleFromHub = (moduleKey: string) => {
     if (autoAdvanceTimeoutRef.current) clearTimeout(autoAdvanceTimeoutRef.current);
     playSound('click');
-    
+
     // Reset solved state for all slides in this module if already played
     const slides = gameModules[moduleKey] || [];
     setSolvedSteps((prev) => {
@@ -639,7 +639,7 @@ export default function Home() {
             <h2 className="text-2xl sm:text-4xl font-black text-slate-800 tracking-tight leading-none uppercase drop-shadow-sm font-display font-black">
               Ultimate Dosa Chef! 🍽️
             </h2>
-            <p className="text-xs sm:text-sm font-bold text-slate-700 max-w-sm mx-auto leading-relaxed">
+            <p className="text-md sm:text-md font-bold text-slate-700 max-w-sm mx-auto leading-relaxed">
               Incredible work! You prepared a yummy masala dosa with mom and aced all the activities!
             </p>
           </div>
@@ -653,7 +653,7 @@ export default function Home() {
           >
             <span className="text-3xl select-none">🏆</span>
             <span className="text-base font-black text-emerald-700">All 6 Activities Finished!</span>
-            <span className="text-xs font-bold text-slate-500">You're a Dosa Master Chef!</span>
+            <span className="text-sm font-bold text-slate-500">You're a Dosa Master Chef!</span>
           </motion.div>
 
           {/* Restart Button */}
