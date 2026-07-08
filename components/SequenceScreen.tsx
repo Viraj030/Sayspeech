@@ -95,11 +95,11 @@ function DroppablePlaceholder({
       {placedItem ? (
         <DraggableSequenceCard item={placedItem} isSolved={isSolved} />
       ) : (
-        <div className="flex flex-col items-center gap-1 pointer-events-none select-none">
-          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-slate-600 text-[10px] sm:text-xs font-black">
+        <div className="flex flex-col items-center gap-1.5 pointer-events-none select-none">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-slate-700 text-sm sm:text-base font-black">
             {index + 1}
           </div>
-          <span className="text-[9px] sm:text-[10px] font-black text-slate-500">Step {index + 1}</span>
+          <span className="text-xs sm:text-sm font-black text-slate-600">Step {index + 1}</span>
         </div>
       )}
     </div>
