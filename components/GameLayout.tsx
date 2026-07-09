@@ -47,121 +47,115 @@ export default function GameLayout({
   };
 
   return (
-    <div style={{ backgroundColor: '#fdfae6' }} className="h-screen w-screen flex items-center justify-center p-2 sm:p-4 overflow-hidden select-none font-sans antialiased">
-      {/* Immersive Green tablet frame filling viewport exactly */}
-      <div
-        className={`w-full ${isWide ? 'max-w-3xl' : 'max-w-3xl'} h-full rounded-[24px] sm:rounded-[32px] flex flex-col shadow-2xl relative overflow-hidden transition-all duration-300`}
-        style={{
-          backgroundColor: '#66bb6a',
-          border: '8px solid #4caf50',
-        }}
-      >
+    <div style={{ backgroundColor: '#fdfae6' }} className="h-screen w-screen flex items-center justify-center p-2 sm:p-4 md:p-8 overflow-hidden select-none font-sans antialiased">
+      {/* Wrapper to hold the game screen and the side buttons together */}
+      <div className={`relative w-full ${isWide ? 'max-w-3xl' : 'max-w-3xl'} h-full flex items-center justify-center`}>
+        {/* Immersive Green tablet frame filling viewport exactly */}
+        <div
+          className={`w-full h-full rounded-[24px] sm:rounded-[32px] flex flex-col shadow-2xl relative overflow-hidden transition-all duration-300`}
+          style={{
+            backgroundColor: '#66bb6a',
+            border: '8px solid #4caf50',
+          }}
+        >
 
-        {/* Compact Header (fixed height, zero padding waste) */}
-        {!hideHeader && (
-          <header className="relative flex items-center px-4 pt-3.5 pb-2.5 min-h-[56px] sm:min-h-[68px] shrink-0 select-none">
-            {/* HOME Button */}
-            {!hideHome && (
-              <button
-                onClick={onHome}
-                style={{
-                  backgroundColor: '#ff5252',
-                  borderRadius: '20px',
-                  padding: '8px 16px',
-                  fontSize: '0.85rem',
-                  fontWeight: 900,
-                  color: 'white',
-                  cursor: 'pointer',
-                  border: 'none',
-                  boxShadow: '0 6px 0 rgba(0, 0, 0, 0.15)',
-                }}
-                className="flex items-center gap-1.5 active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 z-10"
-              >
-                <Home className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Home</span>
-              </button>
-            )}
+          {/* Compact Header (fixed height, zero padding waste) */}
+          {!hideHeader && (
+            <header className="relative flex items-center px-4 pt-3.5 pb-2.5 min-h-[56px] sm:min-h-[68px] shrink-0 select-none">
+              {/* HOME Button */}
+              {!hideHome && (
+                <button
+                  onClick={onHome}
+                  style={{
+                    backgroundColor: '#ff5252',
+                    borderRadius: '20px',
+                    padding: '8px 16px',
+                    fontSize: '0.85rem',
+                    fontWeight: 900,
+                    color: 'white',
+                    cursor: 'pointer',
+                    border: 'none',
+                    boxShadow: '0 6px 0 rgba(0, 0, 0, 0.15)',
+                  }}
+                  className="flex items-center gap-1.5 active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 z-10"
+                >
+                  <Home className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Home</span>
+                </button>
+              )}
 
-            {/* Activity Title (uppercase bold white with yellow rays and curve underline) */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none select-none z-0">
-              <div className="flex items-center gap-1.5 sm:gap-2.5">
+              {/* Activity Title (uppercase bold white with yellow rays and curve underline) */}
+              <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none select-none z-0">
+                <div className="flex items-center gap-1.5 sm:gap-2.5">
+                  {activityName !== 'Say Speech' && (
+                    <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+                  )}
+                  <h1 className={`text-sm sm:text-2xl font-black text-white font-display drop-shadow-md text-center truncate ${activityName === 'Say Speech' ? 'tracking-normal' : 'tracking-widest uppercase'}`}>
+                    {activityName}
+                  </h1>
+                  {activityName !== 'Say Speech' && (
+                    <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+                  )}
+                </div>
+                {/* Small yellow underline curve */}
                 {activityName !== 'Say Speech' && (
-                  <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
-                )}
-                <h1 className={`text-sm sm:text-2xl font-black text-white font-display drop-shadow-md text-center truncate ${activityName === 'Say Speech' ? 'tracking-normal' : 'tracking-widest uppercase'}`}>
-                  {activityName}
-                </h1>
-                {activityName !== 'Say Speech' && (
-                  <span className="text-[#fef08a] font-black text-[15px] sm:text-[22px] tracking-tighter shrink-0 select-none">彡</span>
+                  <div className="w-[45%] h-1 sm:h-1.5 bg-[#fef08a] rounded-full mt-0.5" />
                 )}
               </div>
-              {/* Small yellow underline curve */}
-              {activityName !== 'Say Speech' && (
-                <div className="w-[45%] h-1 sm:h-1.5 bg-[#fef08a] rounded-full mt-0.5" />
+
+              {/* RESET Button */}
+              {onReset && (
+                <button
+                  onClick={onReset}
+                  style={{
+                    backgroundColor: '#3f51b5',
+                    borderRadius: '20px',
+                    padding: '8px 16px',
+                    fontSize: '0.85rem',
+                    fontWeight: 900,
+                    color: 'white',
+                    cursor: 'pointer',
+                    border: 'none',
+                    boxShadow: '0 6px 0 rgba(0, 0, 0, 0.15)',
+                    marginLeft: 'auto',
+                  }}
+                  className="flex items-center gap-1.5 active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 z-10 group"
+                >
+                  <RefreshCw className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-500" />
+                  <span className="hidden sm:inline">{resetLabel || 'Reset'}</span>
+                </button>
               )}
-            </div>
+            </header>
+          )}
 
-            {/* RESET Button */}
-            {onReset && (
-              <button
-                onClick={onReset}
-                style={{
-                  backgroundColor: '#3f51b5',
-                  borderRadius: '20px',
-                  padding: '8px 16px',
-                  fontSize: '0.85rem',
-                  fontWeight: 900,
-                  color: 'white',
-                  cursor: 'pointer',
-                  border: 'none',
-                  boxShadow: '0 6px 0 rgba(0, 0, 0, 0.15)',
-                  marginLeft: 'auto',
-                }}
-                className="flex items-center gap-1.5 active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 z-10 group"
-              >
-                <RefreshCw className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-500" />
-                <span className="hidden sm:inline">{resetLabel || 'Reset'}</span>
-              </button>
-            )}
-          </header>
-        )}
+          {/* Main Content Area (stretches dynamically, min-h-0 prevents overflow scrolling) */}
+          <main className="flex-1 flex items-center justify-center relative min-h-0 w-full overflow-hidden">
+            {children}
+          </main>
 
-        {/* Main Content Area (stretches dynamically, min-h-0 prevents overflow scrolling) */}
-        <main className="flex-1 flex items-center justify-center relative min-h-0 w-full overflow-hidden">
-          {children}
-        </main>
+          {/* Navigation moved outside */}
+        </div>
 
-        {/* Floating absolute Footer */}
+        {/* Side Navigation Buttons (Outside the game screen, but close to it) */}
         {!hideFooter && (
-          <footer className="absolute bottom-6 left-0 right-0 flex items-center justify-between px-6 z-20 pointer-events-none select-none">
+          <>
             {/* PREV button */}
             <button
               onClick={onPrev}
               disabled={disablePrev}
               style={{
                 backgroundColor: disablePrev ? '#a0a0a0' : '#ff9800',
-                borderRadius: '20px',
+                borderRadius: '50%',
                 color: 'white',
                 cursor: disablePrev ? 'not-allowed' : 'pointer',
                 border: 'none',
                 boxShadow: disablePrev ? 'none' : '0 6px 0 rgba(0, 0, 0, 0.15)',
                 opacity: disablePrev ? 0.4 : 1,
               }}
-              className="flex items-center gap-1 pointer-events-auto active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 disabled:cursor-not-allowed px-3.5 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-base font-black"
+              className="absolute -left-3 sm:-left-6 md:-left-20 top-1/2 -translate-y-1/2 flex items-center justify-center z-30 active:translate-y-[calc(-50%+3px)] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all disabled:cursor-not-allowed w-12 h-12 sm:w-14 sm:h-14 shadow-lg scale-75 sm:scale-100"
             >
-              <ChevronLeft className="w-4 h-4 stroke-[3px]" />
-              <span className="hidden sm:inline">Prev</span>
+              <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 stroke-[3px] -ml-1" />
             </button>
-
-            {/* Single-line Progress bar and label */}
-            {/* <div className="flex-1 max-w-sm sm:max-w-md mx-4 flex items-center justify-center gap-3 text-white pointer-events-auto bg-black/20 px-4 py-2.5 rounded-2xl backdrop-blur-[2px] shadow-sm">
-            <span className="text-[10px] sm:text-xs font-black tracking-wide uppercase drop-shadow-sm whitespace-nowrap shrink-0">
-              Step {currentStepIndex + 1}/{totalSteps}
-            </span>
-            <div className="w-full">
-              <ProgressBar current={currentStepIndex + 1} total={totalSteps} />
-            </div>
-          </div> */}
 
             {/* NEXT button */}
             <button
@@ -169,19 +163,18 @@ export default function GameLayout({
               disabled={disableNext}
               style={{
                 backgroundColor: disableNext ? '#a0a0a0' : '#009688',
-                borderRadius: '20px',
+                borderRadius: '50%',
                 color: 'white',
                 cursor: disableNext ? 'not-allowed' : 'pointer',
                 border: 'none',
                 boxShadow: disableNext ? 'none' : '0 6px 0 rgba(0, 0, 0, 0.15)',
                 opacity: disableNext ? 0.4 : 1,
               }}
-              className="flex items-center gap-1 pointer-events-auto active:translate-y-[3px] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all uppercase shrink-0 disabled:cursor-not-allowed px-3.5 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-base font-black"
+              className="absolute -right-3 sm:-right-6 md:-right-20 top-1/2 -translate-y-1/2 flex items-center justify-center z-30 active:translate-y-[calc(-50%+3px)] active:shadow-[0_3px_0_rgba(0,0,0,0.15)] transition-all disabled:cursor-not-allowed w-12 h-12 sm:w-14 sm:h-14 shadow-lg scale-75 sm:scale-100"
             >
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="w-4 h-4 stroke-[3px]" />
+              <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 stroke-[3px] -mr-1" />
             </button>
-          </footer>
+          </>
         )}
       </div>
     </div>

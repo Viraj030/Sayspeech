@@ -502,20 +502,7 @@ export default function Home() {
             instruction={currentStep.instruction}
             correctHotspotId={currentStep.correctHotspotId}
             hotspots={currentStep.hotspots}
-            onSolved={() => {
-              handleSolveStep(currentStep.id);
-              if (currentStepIndex < totalSteps - 1) {
-                setCurrentStepIndex((prev) => prev + 1);
-              } else {
-                // Complete module
-                const completedKey = currentModule!;
-                setJustCompletedModule(completedKey);
-                const nextCompleted = { ...completedModules, [completedKey]: true };
-                setCompletedModules(nextCompleted);
-                saveProgress(nextCompleted, 'hub');
-                setShowRewardPopup(true);
-              }
-            }}
+            onSolved={() => handleSolveStep(currentStep.id)}
             isSolved={isSolved}
           />
         );

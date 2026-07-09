@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 export default function HowToUseScreen() {
   return (
     <div
-      className="relative w-full h-full flex items-center justify-center overflow-hidden bg-cover bg-center pt-6 px-1.5 pb-20 sm:pb-24 select-none"
+      className="relative w-full h-full flex items-center justify-center overflow-hidden bg-cover bg-center p-2 sm:p-4 select-none"
       style={{
         backgroundImage: "url('/make_a_dosa_images/game-bg.jpg')",
       }}

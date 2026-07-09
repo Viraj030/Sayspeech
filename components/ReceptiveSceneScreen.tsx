@@ -43,11 +43,11 @@ export default function ReceptiveSceneScreen({
 
   // Specific position coordinates on counter to scatter elements naturally (not straight line)
   const itemPositions: Record<string, { left: number; top: number; width: number; height: number }> = {
-    batter: { left: 75, top: 55, width: 20, height: 20 },
-    masala: { left: 20, top: 82, width: 20, height: 16 },
-    oil: { left: 45, top: 80, width: 7, height: 18 },
-    spatula: { left: 62, top: 78, width: 5, height: 23 },
-    plate: { left: 68, top: 72, width: 22, height: 16 }
+    batter: { left: 6, top: 82, width: 20, height: 20 },
+    masala: { left: 28, top: 82, width: 20, height: 20 },
+    oil: { left: 51, top: 81, width: 7, height: 18 },
+    spatula: { left: 65, top: 77, width: 5, height: 23 },
+    plate: { left: 74, top: 84, width: 22, height: 16 }
   };
 
   // Map for friendly praise sentences
@@ -91,10 +91,8 @@ export default function ReceptiveSceneScreen({
       const praiseName = objectPraiseNames[hotspot.id] || hotspot.label.toLowerCase();
       setBubbleText(`Great Job! That's the ${praiseName}!`);
 
-      // Auto advance delay (2.5 seconds)
-      setTimeout(() => {
-        onSolved();
-      }, 2500);
+      // Enable Next button immediately
+      onSolved();
 
     } else {
       // Wrong click
