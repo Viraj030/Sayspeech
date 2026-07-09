@@ -21,6 +21,7 @@ import SequenceScreen from '@/components/SequenceScreen';
 import ChallengeHub from '@/components/ChallengeHub';
 import RewardPopup from '@/components/RewardPopup';
 import ReceptiveSceneScreen from '@/components/ReceptiveSceneScreen';
+import HowToUseScreen from '@/components/HowToUseScreen';
 
 // Import Data & types
 import { gameModules } from '@/data/makeDosa';
@@ -32,7 +33,7 @@ export default function Home() {
 
   // Core navigation states
   const [currentModule, setCurrentModule] = useState<
-    'welcome' | 'hub' | 'story' | 'receptiveLanguage' | 'objectFunction' | 'sentenceBuilding' | 'whQuestions' | 'sequencing' | null
+    'welcome' | 'howToUse' | 'hub' | 'story' | 'receptiveLanguage' | 'objectFunction' | 'sentenceBuilding' | 'whQuestions' | 'sequencing' | null
   >('welcome');
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [resetCounter, setResetCounter] = useState(0);
@@ -130,7 +131,7 @@ export default function Home() {
   }, []);
 
   // Current active slide array
-  const isGameplay = currentModule && currentModule !== 'welcome' && currentModule !== 'hub';
+  const isGameplay = currentModule && currentModule !== 'welcome' && currentModule !== 'howToUse' && currentModule !== 'hub';
   const currentModuleSlides = isGameplay ? gameModules[currentModule] || [] : [];
   const totalSteps = currentModuleSlides.length;
   const currentStep = isGameplay ? currentModuleSlides[currentStepIndex] : null;
@@ -323,16 +324,9 @@ export default function Home() {
   const handleHome = () => {
     if (autoAdvanceTimeoutRef.current) clearTimeout(autoAdvanceTimeoutRef.current);
     playSound('click');
-    if (currentModule !== 'welcome' && currentModule !== 'hub') {
-      // Return to Selection Hub if backing out of an activity
-      setCurrentModule('hub');
-      setCurrentStepIndex(0);
-      saveProgress(completedModules, 'hub');
-    } else {
-      // Exit back to Welcome Page
-      setCurrentModule('welcome');
-      saveProgress(completedModules, 'welcome');
-    }
+    setCurrentModule('welcome');
+    setCurrentStepIndex(0);
+    saveProgress(completedModules, 'welcome');
   };
 
   const selectModuleFromHub = (moduleKey: string) => {
@@ -559,8 +553,10 @@ export default function Home() {
     activityName = 'WH Questions';
   } else if (currentModule === 'sequencing') {
     activityName = 'Sequencing';
+  } else if (currentModule === 'howToUse') {
+    activityName = 'HOW TO USE';
   } else if (currentModule === 'hub' || currentModule === null) {
-    activityName = isAllCompleted ? 'Dosa Master Chef! 🏆' : 'Choose Your Activity';
+    activityName = isAllCompleted ? 'Dosa Master Chef! 🏆' : 'Choose Your Target Goal';
   }
 
   // ── WELCOME SCREEN RENDERING ──
@@ -572,8 +568,7 @@ export default function Home() {
         activityName="Say Speech"
         onNext={() => {
           playSound('click');
-          setCurrentModule('hub');
-          saveProgress(completedModules, 'hub');
+          setCurrentModule('howToUse');
         }}
         onPrev={() => { }}
         disableNext={false}
@@ -589,10 +584,38 @@ export default function Home() {
           description="Follow Aarav and his mom as they cook a yummy masala dosa together!"
           onStart={() => {
             playSound('click');
-            setCurrentModule('hub');
-            saveProgress(completedModules, 'hub');
+            setCurrentModule('howToUse');
           }}
         />
+      </GameLayout>
+    );
+  }
+
+  // ── HOW TO USE SCREEN RENDERING ──
+  if (currentModule === 'howToUse') {
+    return (
+      <GameLayout
+        currentStepIndex={0}
+        totalSteps={0}
+        activityName="HOW TO USE"
+        onNext={() => {
+          playSound('click');
+          setCurrentModule('hub');
+          saveProgress(completedModules, 'hub');
+        }}
+        onPrev={() => {
+          playSound('click');
+          setCurrentModule('welcome');
+        }}
+        disableNext={false}
+        disablePrev={false}
+        onHome={handleHome}
+        isWide={true}
+        hideHeader={false}
+        hideFooter={false}
+        hideHome={true}
+      >
+        <HowToUseScreen />
       </GameLayout>
     );
   }

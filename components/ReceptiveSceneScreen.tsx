@@ -43,11 +43,11 @@ export default function ReceptiveSceneScreen({
 
   // Specific position coordinates on counter to scatter elements naturally (not straight line)
   const itemPositions: Record<string, { left: number; top: number; width: number; height: number }> = {
-    batter: { left: 3, top: 65, width: 20, height: 20 },
+    batter: { left: 75, top: 55, width: 20, height: 20 },
     masala: { left: 20, top: 82, width: 20, height: 16 },
     oil: { left: 45, top: 80, width: 7, height: 18 },
     spatula: { left: 62, top: 78, width: 5, height: 23 },
-    plate: { left: 67, top: 72, width: 22, height: 16 }
+    plate: { left: 68, top: 72, width: 22, height: 16 }
   };
 
   // Map for friendly praise sentences
