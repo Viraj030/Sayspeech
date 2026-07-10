@@ -151,6 +151,7 @@ interface DragDropScreenProps {
   onSolved: () => void;
   isSolved: boolean;
   dialogues?: DialogueType[];
+  isBgTop?: boolean;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -169,6 +170,7 @@ export default function DragDropScreen({
   onSolved,
   isSolved,
   dialogues = [],
+  isBgTop = false,
 }: DragDropScreenProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [shakeId, setShakeId] = useState<string | null>(null);
@@ -293,7 +295,7 @@ export default function DragDropScreen({
               <img
                 src={currentBg}
                 alt="Kitchen"
-                className="w-full h-full object-cover pointer-events-none"
+                className={`w-full h-full object-cover pointer-events-none ${isBgTop ? 'object-top' : 'object-center'}`}
                 draggable={false}
               />
 

@@ -361,6 +361,8 @@ export default function Home() {
     }
   }, [currentStepIndex, currentModule, currentStep]);
 
+  const isBgTop = currentModule === 'story' && currentStepIndex > 1;
+
   const renderScreenContent = () => {
     if (!currentStep) return null;
     const isSolved = isCurrentStepSolved();
@@ -387,6 +389,7 @@ export default function Home() {
             bottomItems={(currentStep as any).bottomItems}
             showBottomLabels={(currentStep as any).showBottomLabels}
             isCentered={currentModule !== 'story' && currentStepIndex === 0}
+            isBgTop={isBgTop}
           />
         );
 
@@ -418,6 +421,7 @@ export default function Home() {
             onSolved={() => handleSolveStep(dragStep.id)}
             isSolved={isSolved}
             dialogues={dragStep.dialogues}
+            isBgTop={isBgTop}
           />
         );
       }

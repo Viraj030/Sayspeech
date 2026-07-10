@@ -124,7 +124,7 @@ export default function ReceptiveSceneScreen({
           <img
             src={backgroundImage}
             alt="Kitchen Scene"
-            className="w-full h-full object-cover pointer-events-none"
+            className="w-full h-full object-top pointer-events-none"
             draggable={false}
           />
 

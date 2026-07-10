@@ -17,6 +17,7 @@ interface StoryScreenProps {
   bottomItems?: { id: string; image: string; label: string }[];
   showBottomLabels?: boolean;
   isCentered?: boolean;
+  isBgTop?: boolean;
 }
 
 export default function StoryScreen({
@@ -28,6 +29,7 @@ export default function StoryScreen({
   bottomItems = [],
   showBottomLabels = false,
   isCentered = false,
+  isBgTop = false,
 }: StoryScreenProps) {
   const [visibleCount, setVisibleCount] = useState(1);
 
@@ -84,7 +86,7 @@ export default function StoryScreen({
           <img
             src={image}
             alt="Scene"
-            className="w-full h-full object-cover pointer-events-none"
+            className={`w-full h-full object-top pointer-events-none ${isBgTop ? 'object-top' : 'object-center'}`}
             draggable={false}
           />
 
@@ -104,19 +106,32 @@ export default function StoryScreen({
             />
           ))}
 
-          {/* Bottom items row */}
+          {/* Items scattered on counter (Receptive Scene style) */}
           {bottomItems && bottomItems.length > 0 && (
-            <div
-              className="absolute bottom-[10%] left-0 right-0 flex items-end justify-around bg-transparent px-4"
-              style={{ height: '18%', zIndex: 28 }}
-            >
-              {bottomItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex flex-col items-center select-none"
-                  style={{ width: '18%' }}
-                >
-                  <div className="flex items-center justify-center" style={{ height: '10cqw', maxHeight: '75px' }}>
+            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 28 }}>
+              {bottomItems.map((item) => {
+                const itemPositions: Record<string, { left: number; top: number; width: number; height: number }> = {
+                  batter: { left: 6, top: 82, width: 23, height: 20 },
+                  masala: { left: 28, top: 82, width: 23, height: 20 },
+                  oil: { left: 51, top: 81, width: 10, height: 18 },
+                  spatula: { left: 65, top: 77, width: 8, height: 23 },
+                  plate: { left: 74, top: 84, width: 24, height: 16 }
+                };
+                
+                const pos = itemPositions[item.id];
+                if (!pos) return null;
+                
+                return (
+                  <div
+                    key={item.id}
+                    className="absolute flex items-center justify-center select-none pointer-events-auto"
+                    style={{
+                      left: `${pos.left}%`,
+                      top: `${pos.top}%`,
+                      width: `${pos.width}%`,
+                      height: `${pos.height}%`,
+                    }}
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.image}
@@ -125,16 +140,8 @@ export default function StoryScreen({
                       draggable={false}
                     />
                   </div>
-                  {/* {showBottomLabels && (
-                    <span
-                      className="font-extrabold text-slate-800 text-center leading-tight whitespace-nowrap mt-1 select-none border-2 border-slate-700 bg-white rounded shadow-sm"
-                      style={{ fontSize: 'clamp(9px, 1.4cqw, 13px)', padding: '2px 6px' }}
-                    >
-                      {item.label}
-                    </span>
-                  )} */}
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
 
